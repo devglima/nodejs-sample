@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 var MongoClient = require('mongodb').MongoClient
 const app = express();
 app.use(express.json());
@@ -6,15 +7,20 @@ app.use(express.json());
 const connection_url =
     "mongodb://root:SimoniniDB@b2b-db.cf9vntua4zgb.us-east-1.docdb.amazonaws.com:27017/b2b-db?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false&directConnection=true";
 
-var db = MongoClient.connect(
-    connection_url,
-    {
-        tlsCAFile: `rds-combined-ca-bundle.pem`
-    },
-    function (err, client) {
-        if (err)
-            console.log(err);
-        throw err;
+var db = mongoose.connect(connection_url, {
+    ssl: true,
+    sslValidate: false,
+    autoIndex: true,
+    connectTimeoutMS: 100000,
+    keepAlive: true,
+  })
+    .then(() => {
+      console.log("MongoDB Connected!");
+      return true;
+    })
+    .catch((err) => {
+      console.log("MongoDB isn't connected!", err);
+      return false;
     });
 
 
