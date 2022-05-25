@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const foodsModel = require("./models/foods");
+var MongoClient = require('mongodb').MongoClient
 const app = express();
 app.use(express.json());
 
@@ -35,10 +35,10 @@ app.get("/", (req, res) => {
     console.log(error.message);
 });;
 
-app.get("/foods", (req, res) => {
+app.get("/", (req, res) => {
     console.log(res.statusCode);
-    const foods = await userModel.find({});
-    return res.send(foods);
+    var foods = db.foods.find({}).pretty();
+    return res.json({ message: foods });
 }).on('error', function (error) {
     console.log(error.message);
 });;
