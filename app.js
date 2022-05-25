@@ -10,24 +10,28 @@ const connection_url =
 var db = mongoose.connect(connection_url, {
     ssl: true,
     sslValidate: false,
-    autoIndex: true,
     connectTimeoutMS: 100000,
-    keepAlive: true,
-  })
+    keepAlive: true, 
+    useUnifiedTopology: true, 
+    useNewUrlParser: true, 
+    maxIdleTimeMS: 270000, 
+    minPoolSize: 2, 
+    maxPoolSize: 4
+})
     .then(() => {
-      console.log("MongoDB Connected!");
-      return true;
-    })
+    console.log("MongoDB Connected!");
+    return true;
+})
     .catch((err) => {
-      console.log("MongoDB isn't connected!", err);
-      return false;
+        console.log("MongoDB isn't connected!", err);
+        return false;
     });
 
 
 app.get("/", (req, res) => {
     console.log(res.statusCode);
     return res.json({ message: "Server is up!" });
-}).on('error', function(error){
+}).on('error', function (error) {
     console.log(error.message);
 });;
 
@@ -35,7 +39,7 @@ app.get("/", (req, res) => {
     console.log(res.statusCode);
     var foods = db.foods.find({}).pretty();
     return res.json({ message: foods });
-}).on('error', function(error){
+}).on('error', function (error) {
     console.log(error.message);
 });;
 
