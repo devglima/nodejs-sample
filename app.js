@@ -1,8 +1,6 @@
 const express = require("express");
 var MongoClient = require('mongodb').MongoClient
-
 const app = express();
-
 app.use(express.json());
 
 const connection_url =
@@ -21,12 +19,18 @@ var db = MongoClient.connect(
 
 
 app.get("/", (req, res) => {
+    console.log(res.statusCode);
     return res.json({ message: "Server is up!" });
-});
+}).on('error', function(error){
+    console.log(error.message);
+});;
 
 app.get("/", (req, res) => {
+    console.log(res.statusCode);
     var foods = db.foods.find({}).pretty();
     return res.json({ message: foods });
-});
+}).on('error', function(error){
+    console.log(error.message);
+});;
 
 app.listen(3000);
