@@ -65,6 +65,6 @@ const FoodsSchema = new mongoose.Schema({
     },
 });
 
-const Foods = mongoose.model("Foods", FoodsSchema);
+const Foods = mongoose.model("foods", FoodsSchema);
 
 module.exports = Foods;
