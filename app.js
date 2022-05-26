@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 
 app.get("/foods", async (req, res) => {
     console.log(res.statusCode);
-    return res.send(foods);
+    return res.json({ message: "Query food" });
 }).on('error', function (error) {
     console.log(error.message);
 });;
