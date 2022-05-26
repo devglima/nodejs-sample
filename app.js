@@ -39,7 +39,6 @@ app.get("/", (req, res) => {
 
 app.get("/foods", async (req, res) => {
     console.log(res.statusCode);
-    const foods = await foodsModel.find({});
     return res.send(foods);
 }).on('error', function (error) {
     console.log(error.message);
