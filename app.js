@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const fs = require("fs");
 const app = express();
 const foodsModel = require("./models/foods.js");
 
@@ -12,7 +11,7 @@ const connection_url =
 (async () => await mongoose.connect(connection_url, {
     ssl: true,
     sslValidate: false,
-    sslCA: fs.readFileSync('./rds-combined-ca-bundle.pem'),
+    sslCA: './rds-combined-ca-bundle.pem',
     connectTimeoutMS: 100000,
     keepAlive: true, 
     useUnifiedTopology: true, 
