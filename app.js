@@ -60,6 +60,7 @@ app.get("/categories/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id);
     var categories = await categoriesModel.aggregate([{$match: { id: id }}, { $lookup: { from: "foods", localField: "id", foreignField: "category_id", as: "foods" }}]); 
+    console.log(categories);
     return res.status(200).json(categories);
 }).on('error', function (error) {
     console.log(error.message);
