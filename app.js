@@ -30,14 +30,12 @@ const connection_url =
         return false;
     }))();
 
-let db = mongoose.connection;
-
 app.get("/", (req, res) => {
     console.log(res.statusCode);
     return res.json({ message: "Server is up!" });
 }).on('error', function (error) {
     console.log(error.message);
-});;
+});
 
 app.get("/foods", async (req, res) => {
     console.log(res.statusCode);
@@ -46,13 +44,21 @@ app.get("/foods", async (req, res) => {
     });
 }).on('error', function (error) {
     console.log(error.message);
-});;
+});
 
 app.get("/categories", async (req, res) => {
     console.log(res.statusCode);
     categoriesModel.find((err, categories) => {
         res.status(200).json(categories);
     });
+}).on('error', function (error) {
+    console.log(error.message);
+});
+
+app.get("/categories/:id", async (req, res) => {
+    console.log(res.statusCode);
+    var categories = await categoriesModel.aggregate([{$match: { id: $id }}, { $lookup: { from: "foods", localField: "id", foreignField: "category_id", as: "products" }}]); 
+    return res.status(200).json(categories);
 }).on('error', function (error) {
     console.log(error.message);
 });;
