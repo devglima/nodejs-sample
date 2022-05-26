@@ -29,6 +29,7 @@ const connection_url =
         return false;
     }))();
 
+let db = mongoose.connection;
 
 app.get("/", (req, res) => {
     console.log(res.statusCode);
@@ -39,8 +40,9 @@ app.get("/", (req, res) => {
 
 app.get("/foods", async (req, res) => {
     console.log(res.statusCode);
-    var foods = foodsModel.find({});
-    return res.sendStatus(200).send({"message": foods});
+    foodsModel.find((err, foods) => {
+        res.status(200).json(foods);
+    });
 }).on('error', function (error) {
     console.log(error.message);
 });;
