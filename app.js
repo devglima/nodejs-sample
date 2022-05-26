@@ -39,7 +39,8 @@ app.get("/", (req, res) => {
 
 app.get("/foods", async (req, res) => {
     console.log(res.statusCode);
-    return res.json({ message: "Query food" });
+    var foods = foodsModel.find({});
+    return res.json(foods);
 }).on('error', function (error) {
     console.log(error.message);
 });;
