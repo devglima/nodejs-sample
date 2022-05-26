@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-/* const FoodsSchema = new mongoose.Schema({
+const FoodsSchema = new mongoose.Schema({
     "id": {
         type: Number,
         required: true,
@@ -22,7 +22,7 @@ const mongoose = require("mongoose");
         required: true,
     },
     "ingredients": {
-        type: Object,
+        type: String,
     },
     "weight": {
         type: Number,
@@ -38,36 +38,6 @@ const mongoose = require("mongoose");
     },
     "category_id": {
         type: Number,
-        required: true,
-    },
-    "created_at": {
-        type: String,
-        required: true,
-    },
-    "updated_at": {
-        type: String,
-        required: true,
-    },
-    "cIDCompany": {
-        type: String,
-        required: true,
-    },
-    "cIDProduct": {
-        type: String,
-        required: true,
-    },
-    "cImage": {
-        type: String,
-        required: true,
-    },
-    "xIDUnitMeasureType": {
-        type: String,
-    },
-}); */
-
-const FoodsSchema = new mongoose.Schema({
-    "name": {
-        type: String,
         required: true,
     },
     "created_at": {
