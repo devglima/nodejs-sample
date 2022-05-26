@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const foodsModel = require("./models/foods.js");
+const categoriesModel = require("./models/categories.js");
 
 app.use(express.json());
 
@@ -42,6 +43,15 @@ app.get("/foods", async (req, res) => {
     console.log(res.statusCode);
     foodsModel.find((err, foods) => {
         res.status(200).json(foods);
+    });
+}).on('error', function (error) {
+    console.log(error.message);
+});;
+
+app.get("/categories", async (req, res) => {
+    console.log(res.statusCode);
+    categoriesModel.find((err, categories) => {
+        res.status(200).json(categories);
     });
 }).on('error', function (error) {
     console.log(error.message);
