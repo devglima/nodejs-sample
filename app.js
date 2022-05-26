@@ -57,9 +57,9 @@ app.get("/categories", async (req, res) => {
 
 app.get("/categories/:id", async (req, res) => {
     console.log(res.statusCode);
-    const id = req.params.id;
-    console.log(id);
-    var categories = await categoriesModel.aggregate([{$match: { id: 46 }}, { $lookup: { from: "foods", localField: "id", foreignField: "category_id", as: "foods" }}]); 
+    var categoryID = parseInt(req.params.id);
+    console.log(categoryID);
+    var categories = await categoriesModel.aggregate([{$match: { id: categoryID }}, { $lookup: { from: "foods", localField: "id", foreignField: "category_id", as: "foods" }}]); 
     console.log(categories);
     return res.status(200).json(categories);
 }).on('error', function (error) {
