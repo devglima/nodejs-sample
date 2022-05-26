@@ -11,6 +11,7 @@ const connection_url =
 (async () => await mongoose.connect(connection_url, {
     ssl: true,
     sslValidate: false,
+    sslCA: fs.readFileSync('./rds-combined-ca-bundle.pem'),
     connectTimeoutMS: 100000,
     keepAlive: true, 
     useUnifiedTopology: true, 
