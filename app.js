@@ -79,9 +79,9 @@ app.post('/logout', function (req, res) {
 app.post('/users/setDeviceChosenLanguage', verifyJWT, async (request, response) => {
     const device_chosen_language = request.body;
 
-    var user = await userModel.findOneAndUpdate({ "id": myUserID }, { $set: device_chosen_language }, (err) => {
+    await userModel.findOneAndUpdate({ "id": myUserID }, { $set: device_chosen_language }, (err) => {
         if (!err) {
-            return response.status(200).json({ success: true, "data": user, "message": "User device chosen language set successfully" });
+            return response.status(200).json({ success: true, "message": "User device chosen language set successfully" });
         } else {
             return response.status(500).send({ message: err.message })
         }
