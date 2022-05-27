@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 require("dotenv-safe").config();
+
 const foodsModel = require("./models/foods.js");
 const categoriesModel = require("./models/categories.js");
 
@@ -37,12 +38,14 @@ app.get("/", (req, res) => {
     return res.status(404).json({ "Error": error.message });
 });
 
-app.post('/login', (req, res, next) => {
-    const id = 1; //esse id viria do banco de dados
+app.post('/login', (req, res) => {
+    const id = 1; 
     const token = jwt.sign({ id }, process.env.SECRET, {
-        expiresIn: 300 // expires in 5min
+        expiresIn: 3600
     });
     return res.status(200).json({ auth: true, token: token });
+}).on('error', function (error) {
+    return res.status(404).json({ "Error": error.message });
 });
 
 app.post('/logout', function(req, res) {
@@ -57,7 +60,7 @@ app.get("/foods", verifyJWT , async (req, res) => {
     return res.status(404).json({ "Error": error.message });
 });
 
-app.get("/categories", async (req, res) => {
+app.get("/categories", verifyJWT, async (req, res) => {
     categoriesModel.find((err, categories) => {
         res.status(200).json(categories);
     });
@@ -65,12 +68,12 @@ app.get("/categories", async (req, res) => {
     return res.status(404).json({ "Error": error.message });
 });
 
-app.get("/categories/:id", async (req, res) => {
+app.get("/categories/:id", verifyJWT, async (req, res) => {
     var categoryID = parseInt(req.params.id);
     var categories = await categoriesModel.aggregate([{ $match: { id: categoryID } }, { $lookup: { from: "foods", localField: "id", foreignField: "category_id", as: "foods" } }]);
     return res.status(200).json(categories);
 }).on('error', function (error) {
-    console.log(error.message);
+    return res.status(404).json({ "Error": error.message });
 });;
 
 function verifyJWT(req, res, next){
