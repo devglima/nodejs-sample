@@ -8,4 +8,4 @@ router
   .get("/login", LoginController.login)
   .get("/users/setDeviceChosenLanguage", verifyJWT, LoginController.setDeviceChosenLanguage)
 
-export default router;   
+module.exports = router;

@@ -49,4 +49,4 @@ class LoginController {
 
 }
 
-export default LoginController
+module.exports = LoginController;
