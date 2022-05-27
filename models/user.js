@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
     "id": {
         type: Number,
-        required: true,
     },
     "name": {
         type: String,
@@ -25,7 +24,6 @@ const UserSchema = new mongoose.Schema({
     },
     "token": {
         type: String,
-        required: true,
     },
     "custom_fields": {
         type: Object,

@@ -52,8 +52,10 @@ class LoginController {
 
         user.save((err) => {
             if (err) {
-                response.status(500).send({ "success": false,
-                "message": err.message })
+                response.status(500).send({
+                    "success": false,
+                    "message": err.message
+                });
             }
         });
 
