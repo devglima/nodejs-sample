@@ -5,7 +5,7 @@ const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us
 (async () => await mongoose.connect(connection_url, {
     ssl: true,
     sslValidate: false,
-    sslCA: '../rds-combined-ca-bundle.pem',
+    sslCA: './rds-combined-ca-bundle.pem',
     connectTimeoutMS: 100000,
     keepAlive: true,
     useFindAndModify: false,
