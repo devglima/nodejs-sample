@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
 require("dotenv-safe").config();
+const bcrypt = require('bcryptjs')
 
 const foodsModel = require("./models/foods.js");
 const userModel = require("./models/user.js");
