@@ -43,13 +43,10 @@ app.post('/login', async (req, res) => {
     const email = req.body.email.toString();
     const password = req.body.password.toString();
 
-    console.log(email);
-    console.log(password);
-
     var user = await userModel.find({ "email": email });
 
     console.log(user);
-    console.log(user["created_at"]);
+    console.log(user.name);
     const id = 1; 
     const token = jwt.sign({ id }, process.env.SECRET, {
         expiresIn: 3600
