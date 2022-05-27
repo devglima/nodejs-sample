@@ -20,6 +20,7 @@ const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us
     sslCA: './rds-combined-ca-bundle.pem',
     connectTimeoutMS: 100000,
     keepAlive: true,
+    useFindAndModify: false,
     useUnifiedTopology: true,
     useNewUrlParser: true,
     maxIdleTimeMS: 270000,
