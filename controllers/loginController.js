@@ -59,13 +59,16 @@ class LoginController {
             }
         });
 
-        const newUser = await userModel.findOne({ "email": request.body.email });
+        const email = request.body.email.toString();
+        const password = request.body.password.toString();
+
+        const newUser = await userModel.findOne({ "email": email });
 
         if (newUser == null) {
             return response.status(401).json({ success: false, message: 'User not registered' });
         }
 
-        bcrypt.compare(request.body.password, newUser.password, function (err, res) {
+        bcrypt.compare(password, newUser.password, function (err, res) {
             if (err) {
                 return response.status(500).json({ "Error": error.message });
             }
