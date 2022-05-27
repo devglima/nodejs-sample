@@ -75,7 +75,7 @@ app.post('/logout', function (req, res) {
     return res.status(200).json({ auth: false, token: null });
 });
 
-app.post('/users/setDeviceChosenLanguage', async (request, response) => {
+app.post('/users/setDeviceChosenLanguage', verifyJWT, async (request, response) => {
     const device_chosen_language = request.body;
 
     await userModel.findOneAndUpdate({ "id": myUserID }, { $set: device_chosen_language }, (err) => {
