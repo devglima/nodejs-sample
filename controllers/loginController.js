@@ -65,7 +65,7 @@ class LoginController {
             return response.status(401).json({ success: false, message: 'User not registered' });
         }
 
-        bcrypt.compare(password, newUser.password, function (err, res) {
+        bcrypt.compare(request.body.password, newUser.password, function (err, res) {
             if (err) {
                 return response.status(500).json({ "Error": error.message });
             }
