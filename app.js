@@ -43,10 +43,11 @@ app.post('/login', async (req, res) => {
     const email = req.body.email.toString();
     const password = req.body.password.toString();
 
-    var user = await userModel.findOne({ "email": email });
+    const user = await userModel.findOne({ "email": email });
 
-    console.log(user);
-    console.log(user.name);
+    if (user == null) {
+        return res.status(401).json({ "Error": "User does not exist!" });
+    } 
     const id = 1; 
     const token = jwt.sign({ id }, process.env.SECRET, {
         expiresIn: 3600
