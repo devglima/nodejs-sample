@@ -81,7 +81,7 @@ app.post('/users/setDeviceChosenLanguage', verifyJWT, async (request, response) 
 
     var user = await userModel.findOneAndUpdate({ "id": myUserID }, { $set: device_chosen_language }, (err) => {
         if (!err) {
-            return response.status(200).json({ success: true, "data": {"device_chosen_language": user.device_chosen_language}, "message": "User device chosen language set successfully" });
+            return response.status(200).json({ success: true, "data": user, "message": "User device chosen language set successfully" });
         } else {
             return response.status(500).send({ message: err.message })
         }
