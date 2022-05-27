@@ -14,15 +14,7 @@ const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us
     maxIdleTimeMS: 270000,
     minPoolSize: 2,
     maxPoolSize: 4
-})
-    .then(() => {
-        console.log("MongoDB Connected!");
-        return true;
-    })
-    .catch((err) => {
-        console.log("MongoDB isn't connected!", err);
-        return false;
-    }))();
+}))();
 
 let db = mongoose.connection;
 
