@@ -47,8 +47,45 @@ class LoginController {
         });
     }
 
+    static async register(request, response) {
+        let user = new userModel(request.body);
+
+        user.save((err) => {
+            if (err) {
+                response.status(500).send({ "success": false,
+                "message": err.message })
+            }
+        });
+
+        const newUser = await userModel.findOne({ "email": request.body.email });
+
+        if (newUser == null) {
+            return response.status(401).json({ success: false, message: 'User not registered' });
+        }
+
+        bcrypt.compare(password, newUser.password, function (err, res) {
+            if (err) {
+                return response.status(500).json({ "Error": error.message });
+            }
+            if (res) {
+                const id = newUser.id;
+                myUserID = id;
+                const token = jwt.sign({ id }, process.env.SECRET, {
+                    expiresIn: 3600
+                });
+                newUser.token = token;
+                return response.status(201).json({ success: true, token: token, "data": newUser, "message": "User retrieved successfully" });
+            } else {
+                return response.status(401).json({ success: false, message: 'Invalid password' });
+            }
+        });
+    }
+
     static async logout(request, response) {
-        return response.status(200).json({ auth: false, token: null });
+        return response.status(200).json({
+            "success": true,
+            "message": "User logout successfully"
+        });
     }
 
 }
