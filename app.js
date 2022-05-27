@@ -43,7 +43,7 @@ app.post('/login', async (req, res) => {
     const email = req.body.email.toString();
     const password = req.body.password.toString();
 
-    var user = await userModel.find({ "email": email });
+    var user = await userModel.findById({ "email": email });
 
     console.log(user);
     console.log(user.name);
