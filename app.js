@@ -121,5 +121,3 @@ function verifyJWT(req, res, next) {
 routes(app);
 
 app.listen(3000);
-
-export default app;
