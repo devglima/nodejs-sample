@@ -39,14 +39,14 @@ app.get("/", (req, res) => {
     return res.status(404).json({ "Error": error.message });
 });
 
-app.post('/login', (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+app.post('/login', async (req, res) => {
+    const email = req.body.email.toString();
+    const password = req.body.password.toString();
 
     console.log(email);
     console.log(password);
 
-    var user = userModel.find({ email: email });
+    var user = await userModel.find({ "email": email });
 
     console.log(user);
     console.log(user["created_at"]);
