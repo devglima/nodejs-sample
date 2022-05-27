@@ -59,6 +59,7 @@ app.post('/login', async (request, response) => {
             const token = jwt.sign({ id }, process.env.SECRET, {
                 expiresIn: 3600
             });
+            user.token = token;
             return response.status(200).json({ success: true, token: token, "data": user, "message": "User retrieved successfully"});
         } else {
             return response.status(401).json({ success: false, message: 'Senha incorreta!' });

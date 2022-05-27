@@ -17,6 +17,18 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    "device_token": {
+        type: String,
+        required: true,
+    },
+    "device_chosen_language": {
+        type: String,
+        required: true,
+    },
+    "token": {
+        type: String,
+        required: true,
+    },
 });
 
 const User = mongoose.model("users", UserSchema);
