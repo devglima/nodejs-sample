@@ -6,6 +6,7 @@ const router = express.Router();
 
 router
   .get("/categories", verifyJWT, CategoriesController.getCategories)
+  .get("/faq_categories", verifyJWT, CategoriesController.getFaq_Categories)
   .get("/foods", verifyJWT, CategoriesController.getFoods)
   .get("/categories/:id", verifyJWT, CategoriesController.getCategoriesByID)
 
