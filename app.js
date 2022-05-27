@@ -40,9 +40,9 @@ app.get("/", (req, res) => {
     return res.status(404).json({ "Error": error.message });
 });
 
-app.post('/login', async (req, res) => {
-    const email = req.body.email.toString();
-    const password = req.body.password.toString();
+app.post('/login', async (request, response) => {
+    const email = request.body.email.toString();
+    const password = request.body.password.toString();
 
     const user = await userModel.findOne({ "email": email });
 
@@ -52,20 +52,18 @@ app.post('/login', async (req, res) => {
 
     bcrypt.compare(password, user.password, function (err, res) {
         if (err) {
-            return res.status(404).json({ "Error": error.message });
+            return response.status(500).json({ "Error": error.message });
         }
         if (res) {
             const id = user.id;
             const token = jwt.sign({ id }, process.env.SECRET, {
                 expiresIn: 3600
             });
-            return res.status(200).json({ auth: true, token: token });
+            return response.status(200).json({ auth: true, token: token });
         } else {
             return response.status(401).json({ success: false, message: 'Senha incorreta!' });
         }
     });
-}).on('error', function (error) {
-    return res.status(500).json({ "Error": error.message });
 });
 
 app.post('/logout', function (req, res) {
