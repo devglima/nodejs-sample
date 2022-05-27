@@ -7,7 +7,7 @@ let myUserID;
 
 class LoginController {
 
-    static async login (request, response) {
+    static async login(request, response) {
         const email = request.body.email.toString();
         const password = request.body.password.toString();
 
@@ -35,7 +35,7 @@ class LoginController {
         });
     }
 
-    static async setDeviceChosenLanguage (request, response) {
+    static async setDeviceChosenLanguage(request, response) {
         const device_chosen_language = request.body;
 
         await userModel.findOneAndUpdate({ "id": myUserID }, { $set: device_chosen_language }, (err) => {
@@ -45,6 +45,10 @@ class LoginController {
                 return response.status(500).send({ message: err.message })
             }
         });
+    }
+
+    static async logout(request, response) {
+        return response.status(200).json({ auth: false, token: null });
     }
 
 }

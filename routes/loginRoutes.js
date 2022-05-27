@@ -7,5 +7,6 @@ const router = express.Router();
 router
   .post("/login", LoginController.login)
   .post("/users/setDeviceChosenLanguage", verifyJWT, LoginController.setDeviceChosenLanguage)
+  .post("/logout", LoginController.logout)
 
 module.exports = router;
