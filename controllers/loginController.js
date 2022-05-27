@@ -14,7 +14,7 @@ class LoginController {
         const user = await userModel.findOne({ "email": email });
 
         if (user == null) {
-            return response.status(401).json({ success: false, message: 'Usuário não cadastrado!' });
+            return response.status(401).json({ success: false, message: 'User not registered' });
         }
 
         bcrypt.compare(password, user.password, function (err, res) {
@@ -30,7 +30,7 @@ class LoginController {
                 user.token = token;
                 return response.status(200).json({ success: true, token: token, "data": user, "message": "User retrieved successfully" });
             } else {
-                return response.status(401).json({ success: false, message: 'Senha incorreta!' });
+                return response.status(401).json({ success: false, message: 'Invalid password' });
             }
         });
     }
