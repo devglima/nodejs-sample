@@ -5,7 +5,7 @@ const verifyJWT = require("../utils/verifyJWT.js");
 const router = express.Router();
 
 router
-  .get("/login", LoginController.login)
-  .get("/users/setDeviceChosenLanguage", verifyJWT, LoginController.setDeviceChosenLanguage)
+  .post("/login", LoginController.login)
+  .post("/users/setDeviceChosenLanguage", verifyJWT, LoginController.setDeviceChosenLanguage)
 
 module.exports = router;
