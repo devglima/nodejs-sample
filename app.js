@@ -48,8 +48,8 @@ app.post('/login', (req, res) => {
 
     var user = userModel.find({ email: email });
 
-    /* console.log(user);
-    console.log(user["created_at"]); */
+    console.log(user);
+    console.log(user["created_at"]);
     const id = 1; 
     const token = jwt.sign({ id }, process.env.SECRET, {
         expiresIn: 3600
