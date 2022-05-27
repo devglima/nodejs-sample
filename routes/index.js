@@ -10,7 +10,6 @@ const routes = (app) => {
     app.use(
         express.json(),
         login,
-        categories,
     )
 }
 
