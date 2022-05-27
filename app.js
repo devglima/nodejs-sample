@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require('jsonwebtoken');
+
 require("dotenv-safe").config();
 const bcrypt = require('bcryptjs')
 
@@ -34,6 +35,8 @@ const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us
         return false;
     }))();
 
+let myUser;
+
 app.get("/", (req, res) => {
     return res.json({ message: "Server is up!" });
 }).on('error', function (error) {
@@ -45,6 +48,7 @@ app.post('/login', async (request, response) => {
     const password = request.body.password.toString();
 
     const user = await userModel.findOne({ "email": email });
+    myUser = user;
 
     if (user == null) {
         return response.status(401).json({ success: false, message: 'Usuário não cadastrado!' });
@@ -60,7 +64,7 @@ app.post('/login', async (request, response) => {
                 expiresIn: 3600
             });
             user.token = token;
-            return response.status(200).json({ success: true, token: token, "data": user, "message": "User retrieved successfully"});
+            return response.status(200).json({ success: true, token: token, "data": user, "message": "User retrieved successfully" });
         } else {
             return response.status(401).json({ success: false, message: 'Senha incorreta!' });
         }
@@ -69,6 +73,18 @@ app.post('/login', async (request, response) => {
 
 app.post('/logout', function (req, res) {
     return res.status(200).json({ auth: false, token: null });
+});
+
+app.post('/users/setDeviceChosenLanguage', async (request, response) => {
+    const device_chosen_language = request.body;
+
+    await userModel.findOneAndUpdate({ "id": myUser.id }, { $set: device_chosen_language }, (err) => {
+        if (!err) {
+            return response.status(200).json({ success: true, "data": {"device_chosen_language": user.device_chosen_language}, "message": "User device chosen language set successfully" });
+        } else {
+            return response.status(500).send({ message: err.message })
+        }
+    });
 });
 
 app.get("/foods", verifyJWT, async (req, res) => {
@@ -102,6 +118,7 @@ function verifyJWT(req, res, next) {
     jwt.verify(token, process.env.SECRET, function (err, decoded) {
         if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
 
+        req.body.id = decoded.id;
         next();
     });
 }

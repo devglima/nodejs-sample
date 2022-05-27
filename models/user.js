@@ -19,15 +19,22 @@ const UserSchema = new mongoose.Schema({
     },
     "device_token": {
         type: String,
-        required: true,
     },
     "device_chosen_language": {
         type: String,
-        required: true,
     },
     "token": {
         type: String,
         required: true,
+    },
+    "custom_fields": {
+        type: Object,
+    },
+    "has_media": {
+        type: Boolean,
+    },
+    "media": {
+        type: Array,
     },
 });
 
