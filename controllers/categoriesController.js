@@ -1,5 +1,5 @@
-const foodsModel = require("./models/foods.js");
-const categoriesModel = require("./models/categories.js");
+const foodsModel = require("../models/foods.js");
+const categoriesModel = require("../models/categories.js");
 
 class CategoriesController {
 
