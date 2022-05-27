@@ -36,13 +36,7 @@ const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us
         return false;
     }))();
 
-let myUserID;
-
-app.get("/", (req, res) => {
-    return res.json({ message: "Server is up!" });
-}).on('error', function (error) {
-    return res.status(404).json({ "Error": error.message });
-});
+/* let myUserID;
 
 app.post('/login', async (request, response) => {
     const email = request.body.email.toString();
@@ -122,6 +116,10 @@ function verifyJWT(req, res, next) {
         req.body.id = decoded.id;
         next();
     });
-}
+} */
+
+routes(app);
 
 app.listen(3000);
+
+export default app;
