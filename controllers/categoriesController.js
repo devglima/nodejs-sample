@@ -13,7 +13,11 @@ class CategoriesController {
     static async getCategories(req, res) {
         await categoriesModel.find((err, categories) => {
             if (err) return res.status(404).json({ "Error": error.message });
-            return res.status(200).json(categories);
+            return res.status(200).json({
+                "success": true,
+                "data": categories,
+                "message": "Categories retrieved successfully"
+            });
         });
     }
 
