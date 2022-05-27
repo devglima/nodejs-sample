@@ -46,22 +46,32 @@ app.post('/login', async (req, res) => {
     const user = await userModel.findOne({ "email": email });
 
     if (user == null) {
-        return res.status(401).json({ "Error": "User does not exist!" });
-    } 
-    const id = 1; 
-    const token = jwt.sign({ id }, process.env.SECRET, {
-        expiresIn: 3600
+        return response.status(401).json({ success: false, message: 'Usuário não cadastrado!' });
+    }
+
+    bcrypt.compare(password, user.password, function (err, res) {
+        if (err) {
+            return res.status(404).json({ "Error": error.message });
+        }
+        if (res) {
+            const id = user.id;
+            const token = jwt.sign({ id }, process.env.SECRET, {
+                expiresIn: 3600
+            });
+            return res.status(200).json({ auth: true, token: token });
+        } else {
+            return response.status(401).json({ success: false, message: 'Senha incorreta!' });
+        }
     });
-    return res.status(200).json({ auth: true, token: token });
 }).on('error', function (error) {
-    return res.status(404).json({ "Error": error.message });
+    return res.status(500).json({ "Error": error.message });
 });
 
-app.post('/logout', function(req, res) {
+app.post('/logout', function (req, res) {
     return res.status(200).json({ auth: false, token: null });
 });
 
-app.get("/foods", verifyJWT , async (req, res) => {
+app.get("/foods", verifyJWT, async (req, res) => {
     foodsModel.find((err, foods) => {
         res.status(200).json(foods);
     });
@@ -85,14 +95,14 @@ app.get("/categories/:id", verifyJWT, async (req, res) => {
     return res.status(404).json({ "Error": error.message });
 });;
 
-function verifyJWT(req, res, next){
+function verifyJWT(req, res, next) {
     const token = req.headers['x-access-token'];
     if (!token) return res.status(401).json({ auth: false, message: 'No token provided.' });
-    
-    jwt.verify(token, process.env.SECRET, function(err, decoded) {
-      if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
-      
-      next();
+
+    jwt.verify(token, process.env.SECRET, function (err, decoded) {
+        if (err) return res.status(500).json({ auth: false, message: 'Failed to authenticate token.' });
+
+        next();
     });
 }
 
