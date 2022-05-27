@@ -1,17 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const routes = require("./routes/index.js");
-const jwt = require('jsonwebtoken');
-
 require("dotenv-safe").config();
-const bcrypt = require('bcryptjs')
-
-const foodsModel = require("./models/foods.js");
-const userModel = require("./models/user.js");
-const categoriesModel = require("./models/categories.js");
-
-const app = express();
-app.use(express.json());
 
 const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us-east-1.docdb.amazonaws.com:27017/b2b?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false&directConnection=true";
 
@@ -37,77 +27,10 @@ const connection_url = "mongodb://root:SimoniniDB@b2b-db.cluster-c34svjdft6iv.us
         return false;
     }))();
 
-/* let myUserID;
-
-app.post('/login', async (request, response) => {
-    const email = request.body.email.toString();
-    const password = request.body.password.toString();
-
-    const user = await userModel.findOne({ "email": email });
-
-    if (user == null) {
-        return response.status(401).json({ success: false, message: 'Usuário não cadastrado!' });
-    }
-
-    bcrypt.compare(password, user.password, function (err, res) {
-        if (err) {
-            return response.status(500).json({ "Error": error.message });
-        }
-        if (res) {
-            const id = user.id;
-            myUserID = id;
-            const token = jwt.sign({ id }, process.env.SECRET, {
-                expiresIn: 3600
-            });
-            user.token = token;
-            return response.status(200).json({ success: true, token: token, "data": user, "message": "User retrieved successfully" });
-        } else {
-            return response.status(401).json({ success: false, message: 'Senha incorreta!' });
-        }
-    });
-});
-
-app.post('/logout', function (req, res) {
-    return res.status(200).json({ auth: false, token: null });
-});
-
-app.post('/users/setDeviceChosenLanguage', verifyJWT, async (request, response) => {
-    const device_chosen_language = request.body;
-
-    await userModel.findOneAndUpdate({ "id": myUserID }, { $set: device_chosen_language }, (err) => {
-        if (!err) {
-            return response.status(200).json({ success: true, "message": "User device chosen language set successfully" });
-        } else {
-            return response.status(500).send({ message: err.message })
-        }
-    });
-});
-
-app.get("/foods", verifyJWT, async (req, res) => {
-    foodsModel.find((err, foods) => {
-        res.status(200).json(foods);
-    });
-}).on('error', function (error) {
-    return res.status(404).json({ "Error": error.message });
-});
-
-app.get("/categories", verifyJWT, async (req, res) => {
-    categoriesModel.find((err, categories) => {
-        res.status(200).json(categories);
-    });
-}).on('error', function (error) {
-    return res.status(404).json({ "Error": error.message });
-});
-
-app.get("/categories/:id", verifyJWT, async (req, res) => {
-    var categoryID = parseInt(req.params.id);
-    var categories = await categoriesModel.aggregate([{ $match: { id: categoryID } }, { $lookup: { from: "foods", localField: "id", foreignField: "category_id", as: "foods" } }]);
-    return res.status(200).json(categories);
-}).on('error', function (error) {
-    return res.status(404).json({ "Error": error.message });
-});;
- */
-
+const app = express();
+app.use(express.json());
 routes(app);
 
 app.listen(3000);
+
+module.exports = app;
