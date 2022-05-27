@@ -1,6 +1,7 @@
 const express = require("express")
 const login = require("./loginRoutes.js")
 const categories = require("./categoriesRoutes.js")
+const restaurants = require("./restaurantsRoutes.js")
 
 const routes = (app) => {
     app.route('/').get((req, res) => {
@@ -11,6 +12,7 @@ const routes = (app) => {
         express.json(),
         login,
         categories,
+        restaurants,
     )
 }
 
