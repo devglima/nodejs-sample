@@ -5,6 +5,8 @@ const restaurants = require("./restaurantsRoutes.js")
 const orders = require("./ordersRoutes.js")
 const faqs = require("./faqsRoutes.js")
 const favorites = require("./favoritesRoutes.js")
+const notification = require("./notificationRoutes.js")
+const carts = require("./cartsRoutes.js")
 
 const routes = (app) => {
     app.route('/').get((req, res) => {
@@ -19,6 +21,8 @@ const routes = (app) => {
         orders,
         faqs,
         favorites, 
+        notification,
+        carts,
     )
 }
 
