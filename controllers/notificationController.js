@@ -1,4 +1,4 @@
-const notificationsModel = require("../models/notifications.js");
+const notificationsModel = require("../models/notification.js");
 const notificationTypesModel = require("../models/notification_types.js");
 class NotificationsController {
 
