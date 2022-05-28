@@ -8,7 +8,7 @@ class NotificationsController {
             return res.status(200).json({
                 "success": true,
                 "data": notifications,
-                "message": "notifications retrieved successfully"
+                "message": "Notifications retrieved successfully"
             });
         });
     }
