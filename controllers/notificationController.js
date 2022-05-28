@@ -2,7 +2,7 @@ const notificationsModel = require("../models/notification.js");
 const notificationTypesModel = require("../models/notification_types.js");
 class NotificationsController {
 
-    static async getnotifications(req, res) {
+    static async getNotifications(req, res) {
         await notificationsModel.find((err, notifications) => {
             if (err) return res.status(404).json({ "Error": error.message });
             return res.status(200).json({
@@ -13,7 +13,7 @@ class NotificationsController {
         });
     }
 
-    static async getnotificationTypes(req, res) {
+    static async getNotificationTypes(req, res) {
         await notificationTypesModel.find((err, notification_types) => {
             if (err) return res.status(404).json({ "Error": error.message });
             return res.status(200).json({
