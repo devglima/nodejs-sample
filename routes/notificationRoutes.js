@@ -1,5 +1,5 @@
 const express = require( "express");
-const NotificationController = require( "../controllers/NotificationController.js");
+const NotificationController = require( "../controllers/notificationController.js");
 const verifyJWT = require("../utils/verifyJWT.js");
 
 const router = express.Router();
