@@ -62,11 +62,11 @@ export class CategoriesController {
     */
    static async create(request, response) {
       try {
-         delete request.body.id;
          const { name } = request.body;
 
          const categories = await Categories.findOne({ name });
-         if (categories)
+
+         if (!categories)
             return response.status(200).json({
                success: true,
                message: 'Category name already exists',
