@@ -23,7 +23,7 @@ export const authenticate = (req, res, next) => {
             .status(500)
             .json({ auth: false, message: 'Failed to authenticate token.' });
 
-      req.body.id = decoded.id;
+      //req.body.id = decoded.id;
 
       next();
    });
