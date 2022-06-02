@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import cors from 'cors';
-//import * as database from './config/database.js';
+import * as database from './config/database.js';
 import Routes from './routes/index.js';
 
 const App = express().use(
