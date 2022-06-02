@@ -1,18 +1,14 @@
 import jwt from 'jsonwebtoken';
-import { authenticate } from '../Middleware/AuthMiddleware.js';
 import User from '../Models/user.js';
 
-const useAuth = (req) => {
-   /* let headers = req.headers['authorization'];
-   headers = headers ? headers.split(' ') : []; // ['Bearer', 'token'] */
+const auth = async (req) => {
+   let headers = req.headers['authorization'];
+   headers = headers ? headers.split(' ') : []; // ['Bearer', 'token']
 
-   const user = {
-      id: 12,
-   };
-
-   return {
-      user,
-   };
+   const token = headers[1]; //Get token string\
+   return jwt.verify(token, process.env.SECRET, (err, decoded) => {
+      if (!err) return decoded;
+   });
 };
 
-export default useAuth;
+export default auth;
