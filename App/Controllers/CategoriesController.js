@@ -72,7 +72,7 @@ export class CategoriesController {
                message: 'Category name already exists',
             });
 
-         await Categories.create({ name });
+         await Categories.create(request.body);
 
          return response.status(200).json({
             success: true,
@@ -81,7 +81,7 @@ export class CategoriesController {
       } catch (error) {
          return response.status(500).json({
             error: error.message,
-            success: true,
+            success: false,
             message: 'Can not create categories. Try again later',
          });
       }
