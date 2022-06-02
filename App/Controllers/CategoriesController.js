@@ -1,4 +1,4 @@
-import Categories from '../models/categories.js';
+import Categories from '../Models/categories.js';
 
 export class CategoriesController {
    /**
