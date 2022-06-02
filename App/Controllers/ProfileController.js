@@ -8,13 +8,18 @@ export class ProfileController {
       try {
          const { id } = request.body;
 
-         const user = await User.findById(id);
+         return response.status(500).send({
+            success: false,
+            message: 'ok',
+         });
+
+         /* const user = await User.findById(id);
 
          user.password = undefined;
          return response.status(200).send({
             success: true,
             data: user,
-         });
+         }); */
       } catch (error) {
          return response.status(500).send({
             error: error.message,
