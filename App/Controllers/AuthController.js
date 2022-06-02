@@ -1,6 +1,6 @@
 'use strict';
 import jwt from 'jsonwebtoken';
-import User from '../Models/user.js';
+import User from '../Models/User.js';
 import { Hash } from '../../config/hash.js';
 
 export class AuthController {
