@@ -5,6 +5,7 @@ export class CategoriesController {
     * Show all categories
     * @param {*} request
     * @param {*} response
+    * @returns
     */
 
    static async index(request, response) {
@@ -13,7 +14,6 @@ export class CategoriesController {
          return response.status(200).json({
             success: true,
             data: categories,
-            message: 'Categories retrieved successfully',
          });
       });
    }
@@ -52,6 +52,71 @@ export class CategoriesController {
             },
          },
       ]); */
+   }
+
+   /**
+    *
+    * @param {*} request
+    * @param {*} response
+    * @returns
+    */
+   static async create(request, response) {
+      try {
+         delete request.body.id;
+         const { name } = request.body;
+
+         const categories = await Categories.findOne({ name });
+         if (categories)
+            return response.status(200).json({
+               success: true,
+               message: 'Category name already exists',
+            });
+
+         await Categories.create(request.body);
+
+         return response.status(200).json({
+            success: true,
+            message: 'Category created successfully',
+         });
+      } catch (error) {
+         return response.status(500).json({
+            error: error.message,
+            success: true,
+            message: 'Can not create categories. Try again later',
+         });
+      }
+   }
+
+   /**
+    *
+    * @param {*} request
+    * @param {*} response
+    * @returns
+    */
+   static async update(request, response) {
+      try {
+         const { name, id } = request.body;
+         const categories = await Categories.findOne({ name });
+
+         if (categories && categories._id.toString() !== id)
+            return response.status(200).json({
+               success: true,
+               message: 'Category name already exists',
+            });
+
+         await Categories.create(request.body);
+
+         return response.status(200).json({
+            success: true,
+            message: 'Category created successfully',
+         });
+      } catch (error) {
+         return response.status(200).json({
+            error: error.message,
+            success: true,
+            message: 'Categories retrieved successfully',
+         });
+      }
    }
 
    /* static async getFaq_Categories(request, response) {
