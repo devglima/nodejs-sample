@@ -1,29 +1,47 @@
-const express = require("express")
-const login = require("./loginRoutes.js")
-const categories = require("./categoriesRoutes.js")
-const restaurants = require("./restaurantsRoutes.js")
-const orders = require("./ordersRoutes.js")
-const faqs = require("./faqsRoutes.js")
-const favorites = require("./favoritesRoutes.js")
-const notification = require("./notificationRoutes.js")
-const carts = require("./cartsRoutes.js")
+/**
+ * This is the main entry point for the application.
+ * Basicly all routes are defined here.
+ * To add new routes just import the route file here
+ */
 
-const routes = (app) => {
-    app.route('/').get((req, res) => {
-        return res.json({ message: "Server is up!" });
-    });
+import express from 'express';
+import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
-    app.use(
-        express.json(),
-        login,
-        categories,
-        restaurants,
-        orders,
-        faqs,
-        favorites, 
-        notification,
-        carts,
-    )
-}
+// Import controllers here
+import { AuthController } from '../App/Controllers/AuthController.js';
+import { ProfileController } from '../App/Controllers/ProfileController.js';
+import { SettingsController } from '../App/Controllers/SettingsController.js';
 
-module.exports = routes;
+//Import routes files here
+import categoryRoute from './categories.routes.js';
+
+const Route = express.Router();
+Route.get('/', (req, res) => {
+   res.send('Server is up');
+});
+
+//Auth routes
+Route.post('/login', AuthController.login)
+   .post('/register', AuthController.register)
+   .post('/logout', AuthController.logout);
+
+//Settings app routes
+Route.get('/settings', authenticate, SettingsController.index).put(
+   '/settings/update',
+   authenticate,
+   SettingsController.update
+);
+
+//Profiles routes
+Route.get('/profile', authenticate, ProfileController.show)
+   .put('/profile/update', authenticate, ProfileController.update)
+   .put(
+      '/profile/update-password',
+      authenticate,
+      ProfileController.updatePassword
+   );
+
+//Call others routes here
+Route.use(categoryRoute);
+
+export default Route;

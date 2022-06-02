@@ -1,0 +1,30 @@
+{
+   "presets": [
+      [
+         "@babel/preset-env",
+         {
+            "targets": {
+               "node": "current"
+            }
+         }
+      ],
+   ],
+   "plugins": [
+      [
+         "module-resolver",
+         {
+            "root": [
+               "./"
+            ],
+            "alias": {
+               "App": "./App",
+               "Models": "./App/Models",
+               "Controllers": "./src/controllers"
+            }
+         }
+      ]
+   ],
+   "ignore": [
+      "**/*.spec.ts"
+   ]
+}
