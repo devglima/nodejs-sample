@@ -72,6 +72,7 @@ export class CategoriesController {
                message: 'Category name already exists',
             });
 
+         delete request.body.id;
          await Categories.create(request.body);
 
          return response.status(200).json({
