@@ -9,13 +9,18 @@ export class CategoriesController {
     */
 
    static async index(request, response) {
-      await Categories.find((err, categories) => {
-         if (err) return response.status(404).json({ Error: err.message });
-         return response.status(200).json({
+      try {
+         return response.status(200).send({
             success: true,
-            data: categories,
+            data: await Categories.find(),
          });
-      });
+      } catch (error) {
+         return response.status(500).send({
+            error: error.message,
+            success: false,
+            message: 'Could not process your request. Try again later.',
+         });
+      }
    }
 
    /**
@@ -35,7 +40,7 @@ export class CategoriesController {
             data: categories,
          });
       } catch (error) {
-         return response.status(422).json({
+         return response.status(500).json({
             error: error.message,
             success: false,
             message: 'Could not process your request. Try again later',
