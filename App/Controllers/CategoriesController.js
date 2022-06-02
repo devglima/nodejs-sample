@@ -64,7 +64,7 @@ export class CategoriesController {
       try {
          const { name } = request.body;
 
-         const categories = await Categories.findOne({ name });
+         /* const categories = await Categories.findOne({ name });
 
          if (categories)
             return response.status(200).json({
@@ -72,10 +72,11 @@ export class CategoriesController {
                message: 'Category name already exists',
             });
 
-         await Categories.create(request.body);
+         await Categories.create(request.body); */
 
          return response.status(200).json({
             success: true,
+            data: request.body,
             message: 'Category created successfully',
          });
       } catch (error) {
