@@ -9,11 +9,12 @@ import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
 // Import controllers here
 import { AuthController } from '../App/Controllers/AuthController.js';
-import { ProfileController } from '../App/Controllers/ProfileController.js';
+
 import { SettingsController } from '../App/Controllers/SettingsController.js';
 
 //Import routes files here
 import categoryRoute from './categories.routes.js';
+import profileRoute from './profile.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -32,16 +33,7 @@ Route.get('/settings', authenticate, SettingsController.index).put(
    SettingsController.update
 );
 
-//Profiles routes
-Route.get('/profile', authenticate, ProfileController.show)
-   .put('/profile/update', authenticate, ProfileController.update)
-   .put(
-      '/profile/update-password',
-      authenticate,
-      ProfileController.updatePassword
-   );
-
 //Call others routes here
-Route.use(categoryRoute);
+Route.use(categoryRoute, profileRoute);
 
 export default Route;
