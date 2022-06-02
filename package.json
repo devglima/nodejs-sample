@@ -6,7 +6,7 @@
    "type": "module",
    "scripts": {
       "dev": "nodemon --exec babel-node ./server.js",
-      "build": "babel ./server.js --out-file ./build/server.js",
+      "build": "babel ./ --out-dir dist --copy-files --no-copy-ignored",
       "start": "node server",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
@@ -22,6 +22,8 @@
    },
    "homepage": "https://github.com/devglima/nodejs-sample#readme",
    "dependencies": {
+      "@babel/cli": "^7.17.10",
+      "@babel/core": "^7.18.2",
       "bcryptjs": "^2.4.3",
       "body-parser": "^1.20.0",
       "cors": "^2.8.5",
@@ -36,7 +38,6 @@
       "yup": "^0.32.11"
    },
    "devDependencies": {
-      "@babel/core": "^7.18.2",
       "@babel/node": "^7.17.10",
       "@babel/preset-env": "^7.18.2",
       "babel-plugin-module-resolver": "^4.1.0",
