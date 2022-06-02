@@ -19,7 +19,7 @@ dotenv.config();
 }; */
 
 (async () =>
-   await mongoose.connect(process.env.DATABSE_URL, {
+   await mongoose.connect(process.env.DATABASE_URL, {
       ssl: true,
       sslValidate: false,
       sslCA: './rds-combined-ca-bundle.pem',
