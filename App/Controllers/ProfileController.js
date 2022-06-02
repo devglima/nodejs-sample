@@ -1,20 +1,27 @@
 import User from '../Models/user.js';
 import { Hash } from '../../config/hash.js';
-import useAuth from '../Utils/auth.js';
 
 export class ProfileController {
    constructor() {}
 
    static async show(request, response) {
-      const { id } = useAuth().user();
+      try {
+         const { id } = request.body;
 
-      const user = await User.findById(id);
+         const user = await User.findById(id);
 
-      user.password = undefined;
-      return response.status(200).send({
-         success: true,
-         data: user,
-      });
+         user.password = undefined;
+         return response.status(200).send({
+            success: true,
+            data: user,
+         });
+      } catch (error) {
+         return response.status(500).send({
+            error: error.message,
+            success: false,
+            message: 'Could not process your request. Try again later.',
+         });
+      }
    }
 
    static async update(request, response) {
