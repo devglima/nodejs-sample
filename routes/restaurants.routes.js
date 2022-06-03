@@ -1,11 +1,11 @@
 'use strict';
 
 import { Router } from 'express';
-import { getRestaurants } from '../App/Controllers/RestaurantsController.js';
-import verifyJWT from '../utils/verifyJWT.js';
+import { RestaurantsController } from '../App/Controllers/RestaurantsController.js';
+import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
-const router = Router();
+const Route = Router();
 
-router.get('/restaurants', verifyJWT, getRestaurants);
+Route.get('/restaurants', authenticate, RestaurantsController.index);
 
-export default router;
+export default Route;
