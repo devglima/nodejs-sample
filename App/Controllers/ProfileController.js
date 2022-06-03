@@ -1,14 +1,15 @@
 import User from '../Models/user.js';
 import { Hash } from '../../config/hash.js';
+import auth from '../Utils/auth.js';
 
 export class ProfileController {
    constructor() {}
 
    static async show(request, response) {
       try {
-         const { id } = request.body;
+         const { id: userId } = await auth(request);
 
-         const user = await User.findById(id);
+         const user = await User.findById(userId);
 
          user.password = undefined;
          return response.status(200).send({
@@ -25,10 +26,9 @@ export class ProfileController {
    }
 
    static async update(request, response) {
-      const { id } = request.body;
-      delete request.body.id;
+      const { id: userId } = await auth(request);
 
-      await User.findByIdAndUpdate(id, { $set: request.body }, (err) => {
+      await User.findByIdAndUpdate(userId, { $set: request.body }, (err) => {
          if (!err) {
             return response.status(200).json({
                success: true,
@@ -46,10 +46,11 @@ export class ProfileController {
 
    static async updatePassword(request, response) {
       try {
-         const { id, password, newPassword, confirmPassword } = request.body;
+         const { id: userId } = await auth(request);
+         const { password, newPassword, confirmPassword } = request.body;
          delete request.body.id;
 
-         const user = await User.findById(id);
+         const user = await User.findById(userId);
 
          if (!(await Hash.compare(password, user.password)))
             return response.status(422).json({
@@ -63,7 +64,7 @@ export class ProfileController {
                message: 'Password does not match',
             });
 
-         await User.findByIdAndUpdate(id, {
+         await User.findByIdAndUpdate(userId, {
             $set: { password: await Hash.make(newPassword) },
          });
 
