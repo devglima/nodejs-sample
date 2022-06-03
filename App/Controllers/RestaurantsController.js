@@ -1,9 +1,13 @@
-import { find } from '../Models/Restaurants.js';
+import Restaurants from '../Models/Restaurants.js';
 
-class RestaurantsController {
-   static async getRestaurants(req, res) {
-      await find((err, restaurants) => {
-         if (err) return res.status(404).json({ Error: err.message });
+export class RestaurantsController {
+   static async index(req, res) {
+      await Restaurants.find((err, restaurants) => {
+         if (err)
+            return res.status(404).json({
+               success: false,
+               message: 'Restaurants not retrieved',
+            });
          return res.status(200).json({
             success: true,
             data: restaurants,
@@ -12,5 +16,3 @@ class RestaurantsController {
       });
    }
 }
-
-export default RestaurantsController;
