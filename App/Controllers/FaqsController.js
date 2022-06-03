@@ -1,8 +1,8 @@
-import { find } from '../Models/Faqs.js';
+import Faqs from '../Models/Faqs.js';
 
-class FaqsController {
-   static async getFaqs(req, res) {
-      await find((err, faqs) => {
+export class FaqsController {
+   static async index(req, res) {
+      await Faqs.find((err, faqs) => {
          if (err) return res.status(404).json({ Error: err.message });
          return res.status(200).json({
             success: true,
@@ -12,5 +12,3 @@ class FaqsController {
       });
    }
 }
-
-export default FaqsController;
