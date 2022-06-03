@@ -25,7 +25,7 @@ export class AuthController {
             });
 
          const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-            expiresIn: 3600,
+            expiresIn: '24h',
          });
 
          user.password = undefined;
