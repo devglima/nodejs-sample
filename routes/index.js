@@ -20,7 +20,7 @@ import ordersRoute from './orders.routes.js';
 import foodsRoute from './foods.routes.js';
 import favoritesRoute from './favorites.routes.js';
 import restaurantsRoute from './restaurants.routes.js';
-import currencieRoute from './currencie.routes.js';
+import currenciesRoute from './currencies.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -48,7 +48,7 @@ Route.use(
    foodsRoute,
    favoritesRoute,
    restaurantsRoute,
-   currencieRoute
+   currenciesRoute
 );
 
 export default Route;
