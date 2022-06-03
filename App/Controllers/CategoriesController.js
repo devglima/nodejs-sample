@@ -73,7 +73,7 @@ export class CategoriesController {
 
          if (categories)
             return response.status(200).json({
-               success: true,
+               success: false,
                message: 'Category name already exists',
             });
 
@@ -105,7 +105,7 @@ export class CategoriesController {
 
          if (categories && categories._id.toString() !== id)
             return response.status(200).json({
-               success: true,
+               success: false,
                message: 'Category name already exists',
             });
 
@@ -116,9 +116,9 @@ export class CategoriesController {
             message: 'Category created successfully',
          });
       } catch (error) {
-         return response.status(200).json({
+         return response.status(500).json({
             error: error.message,
-            success: true,
+            success: false,
             message: 'Categories retrieved successfully',
          });
       }
