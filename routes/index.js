@@ -18,6 +18,7 @@ import profileRoute from './profile.routes.js';
 import faqsRoute from './faqs.routes.js';
 import ordersRoute from './orders.routes.js';
 import foodsRoute from './foods.routes.js';
+import favoritesRoute from './favorites.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -37,6 +38,13 @@ Route.get('/settings', authenticate, SettingsController.index).put(
 );
 
 //Call others routes here
-Route.use(categoryRoute, profileRoute, faqsRoute, ordersRoute, foodsRoute);
+Route.use(
+   categoryRoute,
+   profileRoute,
+   faqsRoute,
+   ordersRoute,
+   foodsRoute,
+   favoritesRoute
+);
 
 export default Route;
