@@ -1,3 +1,10 @@
+/**
+ *
+ * @param {*} schema
+ * @returns
+ * @description
+ * This function is used to validate the schema.
+ */
 const validator = (schema) => async (req, res, next) => {
    try {
       await schema.validate(req.body, { strict: true });
