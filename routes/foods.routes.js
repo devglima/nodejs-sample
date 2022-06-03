@@ -1,7 +1,7 @@
 'use strict';
 
 import { Router } from 'express';
-import { FoodsController } from '../App/Controllers/OrdersController.js';
+import { FoodsController } from '../App/Controllers/FoodsController.js';
 import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
 const Route = Router();
