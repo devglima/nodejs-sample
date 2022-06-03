@@ -13,7 +13,7 @@ Route.get('/faqs', authenticate, FaqsController.index)
    .delete('/faqs/delete/:id', authenticate, FaqsController.delete)
    .post(
       '/faqs/create',
-      [/* authenticate, */ createFaqValidator],
+      [authenticate, createFaqValidator],
       FaqsController.create
    )
    .put(
