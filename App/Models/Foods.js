@@ -1,5 +1,4 @@
 'use strict';
-import './config/database.js';
 import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
@@ -7,7 +6,6 @@ const { Schema, model } = mongoose;
 const FoodsSchema = new Schema({
    id: {
       type: Number,
-      required: true,
    },
    name: {
       type: String,
@@ -46,11 +44,9 @@ const FoodsSchema = new Schema({
    },
    created_at: {
       type: String,
-      required: true,
    },
    updated_at: {
       type: String,
-      required: true,
    },
    cIDCompany: {
       type: String,
