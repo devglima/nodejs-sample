@@ -9,7 +9,7 @@ const Route = Router();
 Route.get('/foods', authenticate, FoodsController.index).get(
    '/food_orders',
    authenticate,
-   FoodsController.withOrders
+   FoodsController.foodsWithOrders
 );
 
 export default Route;
