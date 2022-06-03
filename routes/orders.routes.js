@@ -1,16 +1,15 @@
 'use strict';
 
 import { Router } from 'express';
-import {
-   getOrders,
-   getOrdersStatuses,
-} from '../App/Controllers/OrdersController.js';
-import verifyJWT from '../utils/verifyJWT.js';
+import { OrdersController } from '../App/Controllers/OrdersController.js';
+import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
-const router = Router();
+const Route = Router();
 
-router
-   .get('/orders', verifyJWT, getOrders)
-   .get('/order_statuses', verifyJWT, getOrdersStatuses);
+Route.get('/orders', authenticate, OrdersController.index) /* .get(
+   '/order_statuses',
+   authenticate,
+   OrdersController
+) */;
 
-export default router;
+export default Route;
