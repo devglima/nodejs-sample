@@ -6,6 +6,9 @@ const { Schema, model } = mongoose;
 const FaqsSchema = new Schema({
    id: {
       type: Number,
+   },
+   question: {
+      type: String,
       required: true,
    },
    answer: {
@@ -14,15 +17,12 @@ const FaqsSchema = new Schema({
    },
    faq_category_id: {
       type: Number,
-      required: true,
    },
    created_at: {
       type: String,
-      required: true,
    },
    updated_at: {
       type: String,
-      required: true,
    },
 });
 
