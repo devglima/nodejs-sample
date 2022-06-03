@@ -14,7 +14,7 @@ import { SettingsController } from '../App/Controllers/SettingsController.js';
 
 //Import routes files here
 import categoryRoute from './categories.routes.js';
-import profileRoute from './profile.routes.js';
+import userRoute from './user.routes.js';
 import faqsRoute from './faqs.routes.js';
 import ordersRoute from './orders.routes.js';
 import foodsRoute from './foods.routes.js';
@@ -41,7 +41,7 @@ Route.get('/settings', authenticate, SettingsController.index).put(
 //Call others routes here
 Route.use(
    categoryRoute,
-   profileRoute,
+   userRoute,
    faqsRoute,
    ordersRoute,
    foodsRoute,
