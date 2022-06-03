@@ -15,6 +15,7 @@ import { SettingsController } from '../App/Controllers/SettingsController.js';
 //Import routes files here
 import categoryRoute from './categories.routes.js';
 import profileRoute from './profile.routes.js';
+import faqsRoute from './faqs.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -34,6 +35,6 @@ Route.get('/settings', authenticate, SettingsController.index).put(
 );
 
 //Call others routes here
-Route.use(categoryRoute, profileRoute);
+Route.use(categoryRoute, profileRoute, faqsRoute);
 
 export default Route;
