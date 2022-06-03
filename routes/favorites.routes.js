@@ -1,11 +1,11 @@
 'use strict';
 
 import { Router } from 'express';
-import { getFavorites } from '../App/Controllers/FavoritesController.js';
-import verifyJWT from '../config/jwt.js';
+import { FavoritesController } from '../App/Controllers/FavoritesController.js';
+import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
-const router = Router();
+const Route = Router();
 
-router.get('/favorites', verifyJWT, getFavorites);
+Route.get('/favorites', authenticate, FavoritesController.index);
 
-export default router;
+export default Route;
