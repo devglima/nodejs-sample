@@ -1,16 +1,19 @@
-import { find } from '../Models/Favorites.js';
+import Favorites from '../Models/Favorites.js';
 
-class FavoritesController {
-   static async getFavorites(req, res) {
-      await find((err, favorites) => {
-         if (err) return res.status(404).json({ Error: err.message });
-         return res.status(200).json({
+export class FavoritesController {
+   static async index(req, res) {
+      try {
+         const favorites = await Favorites.find();
+         return res.status(500).json({
             success: true,
             data: favorites,
             message: 'Favorites retrieved successfully',
          });
-      });
+      } catch (error) {
+         return res.status(500).json({
+            success: false,
+            message: 'Favorites not retrieved',
+         });
+      }
    }
 }
-
-export default FavoritesController;
