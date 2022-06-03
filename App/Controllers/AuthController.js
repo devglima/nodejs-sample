@@ -58,7 +58,7 @@ export class AuthController {
          const register = await User.create(request.body);
 
          const token = jwt.sign({ id: register.id }, process.env.SECRET, {
-            expiresIn: 3600,
+            expiresIn: 7200,
          });
 
          return response.status(422).json({
