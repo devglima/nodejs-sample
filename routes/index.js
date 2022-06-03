@@ -19,6 +19,7 @@ import faqsRoute from './faqs.routes.js';
 import ordersRoute from './orders.routes.js';
 import foodsRoute from './foods.routes.js';
 import favoritesRoute from './favorites.routes.js';
+import restaurantsRoute from './restaurants.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -44,7 +45,8 @@ Route.use(
    faqsRoute,
    ordersRoute,
    foodsRoute,
-   favoritesRoute
+   favoritesRoute,
+   restaurantsRoute
 );
 
 export default Route;
