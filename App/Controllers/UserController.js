@@ -1,17 +1,31 @@
 import User from '../Models/user.js';
 import { Hash } from '../../config/hash.js';
-import auth from '../Utils/auth.js';
 
-export class ProfileController {
+export class UserController {
    constructor() {}
+
+   static async index(request, response) {
+      try {
+         const users = await User.find().select(['-password']);
+
+         return response.status(200).send({
+            success: true,
+            data: users,
+         });
+      } catch (error) {
+         return response.status(500).send({
+            error: error.message,
+            success: false,
+            message: 'Could not process your request. Try again later.',
+         });
+      }
+   }
 
    static async show(request, response) {
       try {
-         const { id: userId } = await auth(request);
+         const { id } = request.params;
+         const user = await User.findById(id).select('-password');
 
-         const user = await User.findById(userId);
-
-         user.password = undefined;
          return response.status(200).send({
             success: true,
             data: user,
@@ -25,83 +39,57 @@ export class ProfileController {
       }
    }
 
-   static async update(request, response) {
-      const { id: userId } = await auth(request);
+   static async register(request, response) {
+      try {
+         request.body.password = await Hash.make(request.body.password);
+         const register = await User.insert({ $set: request.body });
 
-      await User.findByIdAndUpdate(userId, { $set: request.body }, (err) => {
-         if (!err) {
-            return response.status(200).json({
-               success: true,
-               message: 'User updated successfully',
-            });
-         } else {
-            return response.send({
-               error: err.message,
-               success: false,
-               message: 'Could not update password. Try again later.',
-            });
-         }
-      });
+         delete register.password;
+         return response.status(200).json({
+            success: true,
+            message: 'User registed successfully',
+         });
+      } catch (error) {
+         return response.send({
+            error: error.message,
+            success: false,
+            message: 'Could not register. Try again later.',
+         });
+      }
    }
 
-   static async updatePassword(request, response) {
+   static async update(request, response) {
       try {
-         const { id: userId } = await auth(request);
-         const { password, newPassword, confirmPassword } = request.body;
-         delete request.body.id;
-
-         const user = await User.findById(userId);
-
-         if (!(await Hash.compare(password, user.password)))
-            return response.status(422).json({
-               success: false,
-               message: 'Invalid password',
-            });
-
-         if (newPassword !== confirmPassword)
-            return response.status(422).json({
-               success: false,
-               message: 'Password does not match',
-            });
-
-         await User.findByIdAndUpdate(userId, {
-            $set: { password: await Hash.make(newPassword) },
-         });
+         const { id } = request.params;
+         await User.findByIdAndUpdate(id, { $set: request.body });
 
          return response.status(200).json({
             success: true,
             message: 'User updated successfully',
          });
       } catch (error) {
-         return response.status(422).send({
+         return response.send({
             error: error.message,
             success: false,
-            message: 'Could not update password. Try again later.',
+            message: 'Could not update. Try again later.',
          });
       }
    }
 
-   static async setDeviceChosenLanguage(request, response) {
-      const { id: userId } = await auth(request);
-      const { device_chosen_language } = request.body;
+   static async delete(req, res) {
+      try {
+         const { id } = req.params;
+         await User.findByIdAndDelete(id);
 
-      await User.findByIdAndUpdate(
-         userId,
-         { $set: { device_chosen_language } },
-         (err) => {
-            if (!err) {
-               return response.status(200).json({
-                  success: true,
-                  message: 'User updated successfully',
-               });
-            } else {
-               return response.send({
-                  error: err.message,
-                  success: false,
-                  message: 'Could not update password. Try again later.',
-               });
-            }
-         }
-      );
+         return res.status(200).json({
+            success: true,
+            message: 'User deleted successfully',
+         });
+      } catch (error) {
+         return res.status(500).json({
+            success: false,
+            message: 'Could not retrieve faq. Try again later.',
+         });
+      }
    }
 }
