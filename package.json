@@ -8,7 +8,7 @@
       "dev": "nodemon --exec babel-node ./app.js",
       "build": "babel ./ --out-dir dist --copy-files --no-copy-ignored",
       "start": "node server",
-      "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "jest"
    },
    "repository": {
       "type": "git",
@@ -34,7 +34,7 @@
       "fs": "^0.0.1-security",
       "jsonwebtoken": "^8.5.1",
       "mongodb": "^4.6.0",
-      "mongoose": "5.13.8",
+      "mongoose": "^5.13.8",
       "yup": "^0.32.11"
    },
    "devDependencies": {
@@ -42,7 +42,9 @@
       "@babel/preset-env": "^7.18.2",
       "babel-plugin-module-resolver": "^4.1.0",
       "eslint": "^8.16.0",
+      "jest": "^28.1.0",
       "nodemon": "^2.0.16",
-      "prettier": "2.6.2"
+      "prettier": "2.6.2",
+      "supertest": "^6.2.3"
    }
 }
