@@ -1,13 +1,12 @@
 import Orders from '../Models/Orders.js';
-//import { find as _find } from '../Models/OrdersStatuses.js';
-
 export class OrdersController {
    static async index(req, res) {
-      await Orders.find((err, orders) => {
-         if (err)
+      try {
+         const orders = await Orders.find();
+
+         if (!orders)
             return res.status(404).json({
-               success: true,
-               data: orders,
+               success: false,
                message: 'Orders not found',
             });
 
@@ -16,7 +15,12 @@ export class OrdersController {
             data: orders,
             message: 'Orders retrieved successfully',
          });
-      });
+      } catch (error) {
+         return res.status(500).json({
+            success: false,
+            message: 'Could not process your request. Try again later.',
+         });
+      }
    }
 
    /* static async getOrdersStatuses(req, res) {
