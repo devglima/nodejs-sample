@@ -80,4 +80,26 @@ export class ProfileController {
          });
       }
    }
+
+   static async setDeviceChosenLanguage(request, response) {
+      try {
+         const { id: userId } = await auth(request);
+         const { device_chosen_language } = request.body;
+
+         await User.findByIdAndUpdate(userId, {
+            $set: { device_chosen_language },
+         });
+
+         return response.status(200).json({
+            success: true,
+            message: 'Device updated successfully',
+         });
+      } catch (error) {
+         return response.status(500).send({
+            error: error.message,
+            success: false,
+            message: 'Could not update password. Try again later.',
+         });
+      }
+   }
 }
