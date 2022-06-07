@@ -14,12 +14,12 @@ import { SettingsController } from '../App/Controllers/SettingsController.js';
 
 //Import routes files here
 import categoryRoute from './categories.routes.js';
-import userRoute from './user.routes.js';
+import profileRoute from './profile.routes.js';
+import userRoute from './users.routes.js';
 import faqsRoute from './faqs.routes.js';
 import ordersRoute from './orders.routes.js';
 import foodsRoute from './foods.routes.js';
 import favoritesRoute from './favorites.routes.js';
-import restaurantsRoute from './restaurants.routes.js';
 import currenciesRoute from './currencies.routes.js';
 
 const Route = express.Router();
@@ -41,13 +41,13 @@ Route.get('/settings', authenticate, SettingsController.index).put(
 
 //Call others routes here
 Route.use(
-   categoryRoute,
    userRoute,
+   categoryRoute,
+   profileRoute,
    faqsRoute,
    ordersRoute,
    foodsRoute,
    favoritesRoute,
-   restaurantsRoute,
    currenciesRoute
 );
 
