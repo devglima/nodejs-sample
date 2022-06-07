@@ -19,7 +19,7 @@ const options = {
 };
 
 (async () =>
-   mongoose.connect(process.env.DATABASE_URL_DEV, options, (err) => {
+   mongoose.connect(process.env.DATABASE_URL, options, (err) => {
       if (err) console.log(err);
       else console.log('Connected to database');
    }))();
