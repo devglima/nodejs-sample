@@ -10,9 +10,10 @@ export class CategoriesController {
 
    static async index(request, response) {
       try {
+         const categories = await Categories.find();
          return response.status(200).send({
             success: true,
-            data: await Categories.find(),
+            data: categories,
          });
       } catch (error) {
          return response.status(500).send({
@@ -68,7 +69,6 @@ export class CategoriesController {
    static async create(request, response) {
       try {
          const { name } = request.body;
-
          const categories = await Categories.findOne({ name });
 
          if (categories)
