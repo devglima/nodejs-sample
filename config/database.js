@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const options = {
-   sl: true,
+   ssl: true,
    sslValidate: false,
    sslCA: './rds-combined-ca-bundle.pem',
    connectTimeoutMS: 100000,
