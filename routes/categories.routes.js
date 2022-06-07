@@ -1,25 +1,29 @@
 'use strict';
 
 import express from 'express';
-import validator from '../App/Middleware/Validator.js';
 import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 import { CategoriesController } from '../App/Controllers/CategoriesController.js';
 
-import { createCategoryValidator } from '../App/Validators/CategoriesValidator.js';
+import { categoryValidator } from '../App/Validators/CategoriesValidator.js';
 
 const Route = express.Router();
 
-Route.get('/categories', authenticate, CategoriesController.show)
-   .get('/show/:id', authenticate, CategoriesController.show)
-   .post(
-      '/categories/create',
-      [authenticate, validator(createCategoryValidator)],
-      CategoriesController.create
-   )
-   .post(
-      '/categories/update',
-      [authenticate, validator(createCategoryValidator)],
+Route.post(
+   '/categories/create',
+   [authenticate, categoryValidator],
+   CategoriesController.create
+)
+   .get('/categories', authenticate, CategoriesController.index)
+   .get('/categories/:id', authenticate, CategoriesController.show)
+   .put(
+      '/categories/update/:id',
+      [authenticate, categoryValidator],
       CategoriesController.update
+   )
+   .delete(
+      '/categories/delete/:id',
+      [authenticate],
+      CategoriesController.delete
    );
 
 export default Route;
