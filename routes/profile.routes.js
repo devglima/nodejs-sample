@@ -11,6 +11,11 @@ Route.get('/profile', authenticate, ProfileController.show)
       '/profile/update-password',
       authenticate,
       ProfileController.updatePassword
+   )
+   .put(
+      '/profile/setDeviceChosenLanguage',
+      authenticate,
+      ProfileController.setDeviceChosenLanguage
    );
 
 export default Route;
