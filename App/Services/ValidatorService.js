@@ -6,14 +6,16 @@
  */
 const unique = (yup) => {
    yup.addMethod(yup.mixed, 'unique', function (args) {
-      const { model, column, message } = args;
+      const { table, column, where, message } = args;
 
-      return this.test('unique', message, function (value) {
-         let data = {};
-         data[column] = value;
+      return this.test('unique', message, async function (value) {
+         let query = {};
+         query[column] = value;
+         if (typeof where !== 'undefined') query = { ...query, ...where };
 
-         const result = model.findOne({ where: data });
-         return result !== null;
+         const result = await table.find({ ...query });
+         console.log(result);
+         return result.length === 0;
       });
    });
 };
