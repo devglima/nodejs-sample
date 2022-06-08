@@ -56,18 +56,6 @@ export class CategoriesController {
             message: 'Could not process your request. Try again later',
          });
       }
-
-      /* var categories = await Categories.aggregate([
-         { $match: { id: categoryID } },
-         {
-            $lookup: {
-               from: 'foods',
-               localField: 'id',
-               foreignField: 'category_id',
-               as: 'foods',
-            },
-         },
-      ]); */
    }
 
    /**
