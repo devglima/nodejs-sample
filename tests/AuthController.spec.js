@@ -3,12 +3,13 @@
 import { Http } from './bootstrap';
 
 describe('Login', () => {
-   it('should return a token', async () => {
-      const auth = await Http.post('/login', {
-         email: 'rosario@gmail.com',
-         password: '12345',
+   it('Return a object with success preperty', async () => {
+      const auth = await Http.post('/login').send({
+         email: 'adm@mc1.com',
+         password: 'mc1#123',
       });
 
-      expect(auth).sta;
+      const result = JSON.parse(auth.text);
+      expect(result.success).toBe(true);
    });
 });
