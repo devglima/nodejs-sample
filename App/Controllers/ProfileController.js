@@ -7,7 +7,7 @@ export class ProfileController {
 
    static async show(request, response) {
       try {
-         const { id: userId } = await auth(request);
+         const { _id: userId } = await auth(request);
 
          const user = await User.findById(userId);
 
@@ -26,7 +26,7 @@ export class ProfileController {
    }
 
    static async update(request, response) {
-      const { id: userId } = await auth(request);
+      const { _id: userId } = await auth(request);
 
       await User.findByIdAndUpdate(userId, { $set: request.body }, (err) => {
          if (!err) {
@@ -46,7 +46,7 @@ export class ProfileController {
 
    static async updatePassword(request, response) {
       try {
-         const { id: userId } = await auth(request);
+         const { _id: userId } = await auth(request);
          const { password, newPassword, confirmPassword } = request.body;
          delete request.body.id;
 
@@ -83,7 +83,7 @@ export class ProfileController {
 
    static async setDeviceChosenLanguage(request, response) {
       try {
-         const { id: userId } = await auth(request);
+         const { _id: userId } = await auth(request);
          const { device_chosen_language } = request.body;
 
          await User.findByIdAndUpdate(userId, {
