@@ -2,16 +2,8 @@
 import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
-const OrdersStatusesSchema = new Schema({
-   id: {
-      type: Number,
-      required: true,
-   },
-   name: {
-      type: String,
-      required: true,
-   },
-});
+
+const OrdersStatusesSchema = new Schema({});
 
 const OrdersStatuses = model('order_statuses', OrdersStatusesSchema);
 

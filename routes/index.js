@@ -17,10 +17,13 @@ import categoryRoute from './categories.routes.js';
 import profileRoute from './profile.routes.js';
 import userRoute from './users.routes.js';
 import faqsRoute from './faqs.routes.js';
+import faqsCategoriesRoute from './faqs.categories.routes.js';
 import ordersRoute from './orders.routes.js';
 import foodsRoute from './foods.routes.js';
 import favoritesRoute from './favorites.routes.js';
 import currenciesRoute from './currencies.routes.js';
+import notificationRoute from './notification.routes.js';
+import orderStatusesRoute from './order.statuses.routes.js';
 import cartRoute from './cart.routes.js';
 
 const Route = express.Router();
@@ -50,7 +53,11 @@ Route.use(
    foodsRoute,
    favoritesRoute,
    currenciesRoute,
-   cartRoute
+   cartRoute,
+   notificationRoute,
+   orderStatusesRoute,
+   faqsCategoriesRoute
 );
 
 export default Route;
+

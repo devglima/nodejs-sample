@@ -1,16 +1,28 @@
 'use strict';
 
-import { Router } from 'express';
-import {
-   getNotifications,
-   getNotificationTypes,
-} from '../App/Controllers/NotificationController.js';
-import verifyJWT from '../config/jwt.js';
+import express from 'express';
+import { NotificationsController } from '../App/Controllers/NotificationController.js';
+import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
-const router = Router();
+const Route = express.Router();
 
-router
-   .get('/notifications', verifyJWT, getNotifications)
-   .get('/notification_types', verifyJWT, getNotificationTypes);
+Route.get('/notifications', authenticate, NotificationsController.index)
+    .post(
+        '/notifications/create',
+        authenticate,
+        NotificationsController.create
+    )
+    .get('/notifications/:id', authenticate, NotificationsController.show)
+    .put(
+        '/notifications/update/:id',
+        authenticate,
+        NotificationsController.update
+    )
+    .delete(
+        '/notifications/delete/:id',
+        authenticate,
+        NotificationsController.delete
+    )
+    .get('/notifications_types', authenticate, NotificationsController.getNotificationTypes);
 
-export default router;
+export default Route;
