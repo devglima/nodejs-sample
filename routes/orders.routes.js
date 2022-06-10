@@ -6,10 +6,9 @@ import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
 const Route = Router();
 
-Route.get('/orders', authenticate, OrdersController.index) /* .get(
-   '/order_statuses',
-   authenticate,
-   OrdersController
-) */;
+Route.get('/orders', authenticate, OrdersController.index)
+   .get('/orders/:id', authenticate, OrdersController.show)
+   .post('/orders/parameters', authenticate, OrdersController.orderParameters)
+   .post('/orders/pix', authenticate, OrdersController.pix);
 
 export default Route;
