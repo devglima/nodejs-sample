@@ -24,4 +24,5 @@ const FaqCategoriesSchema = new Schema({
 });
 
 const FaqCategories = model('faq_categories', FaqCategoriesSchema);
+
 export default FaqCategories;

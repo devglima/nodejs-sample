@@ -1,13 +1,12 @@
 'use strict';
 
 import mongoose from 'mongoose';
+import Inc from 'mongoose-sequence';
 
+const AutoIncrement = Inc(mongoose);
 const { Schema, model } = mongoose;
 
 const UserSchema = new Schema({
-   id: {
-      type: Number,
-   },
    name: {
       type: String,
       required: true,
@@ -37,5 +36,6 @@ const UserSchema = new Schema({
    },
 });
 
+UserSchema.plugin(AutoIncrement, { id: 'user_id', inc_field: 'id' });
 const User = model('users', UserSchema);
 export default User;

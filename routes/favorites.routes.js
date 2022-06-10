@@ -1,11 +1,27 @@
 'use strict';
 
-import { Router } from 'express';
+import express from 'express';
 import { FavoritesController } from '../App/Controllers/FavoritesController.js';
 import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
-const Route = Router();
+const Route = express.Router();
 
-Route.get('/favorites', authenticate, FavoritesController.index);
+Route.get('/favorites', authenticate, FavoritesController.index)
+    .post(
+        '/favorites/create',
+        authenticate,
+        FavoritesController.create
+    )
+    .get('/favorites/:id', authenticate, FavoritesController.show)
+    .put(
+        '/favorites/update/:id',
+        authenticate,
+        FavoritesController.update
+    )
+    .delete(
+        '/favorites/delete/:id',
+        authenticate,
+        FavoritesController.delete
+    );
 
 export default Route;

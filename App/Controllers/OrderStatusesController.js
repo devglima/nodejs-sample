@@ -1,8 +1,8 @@
-import Currencies from '../Models/Currencies.js';
+import OrdersStatuses from '../Models/OrdersStatuses.js';
 
-export class CurrenciesController {
+export class OrderStatusesController {
    /**
-    * Show all Currencies
+    * Show all OrdersStatuses
     * @param {*} request
     * @param {*} response
     * @returns
@@ -10,24 +10,24 @@ export class CurrenciesController {
 
    static async index(request, response) {
       try {
-         const currencies = await Currencies.find();
+         const ordersStatuses = await OrdersStatuses.find();
 
          return response.status(200).send({
             success: true,
-            data: currencies,
-            message: 'Currencies retrieved successfully',
+            data: ordersStatuses,
+            message: 'OrdersStatuses retrieved successfully',
          });
       } catch (error) {
          return response.status(500).send({
             error: error.message,
             success: false,
-            message: 'Currencies not retrieved',
+            message: 'OrdersStatuses not retrieved',
          });
       }
    }
 
    /**
-    * Show single Currencie
+    * Show single order statuses
     * @param {*} request
     * @param {*} response
     * @returns
@@ -36,17 +36,17 @@ export class CurrenciesController {
    static async show(request, response) {
       try {
          const { id } = request.params;
-         const currencies = await Currencies.findById(id);
+         const ordersStatuses = await OrdersStatuses.findById(id);
 
-         if (!currencies)
+         if (!ordersStatuses)
             return response.status(404).json({
                success: false,
-               message: 'Currencie not found',
+               message: 'order statuses not found',
             });
 
          return response.json({
             success: true,
-            data: currencies,
+            data: ordersStatuses,
          });
       } catch (error) {
          return response.status(500).json({
@@ -58,30 +58,30 @@ export class CurrenciesController {
    }
 
    /**
-    * Create Currencie
+    * Create order statuses
     * @param {*} request
     * @param {*} response
     * @returns
     */
    static async create(request, response) {
       try {
-         await Currencies.create(request.body);
+         await OrdersStatuses.create(request.body);
 
          return response.status(200).json({
             success: true,
-            message: 'Currencie created successfully',
+            message: 'order statuses created successfully',
          });
       } catch (error) {
          return response.status(500).json({
             error: error.message,
             success: false,
-            message: 'Can not create Currencie. Try again later',
+            message: 'Can not create order statuses. Try again later',
          });
       }
    }
 
    /**
-    * Update Currencie
+    * Update order statuses
     * @param {*} request
     * @param {*} response
     * @returns
@@ -89,24 +89,24 @@ export class CurrenciesController {
    static async update(request, response) {
       try {
          const { id } = request.params;
-         const update = await Currencies.findByIdAndUpdate(id, request.body);
+         const update = await OrdersStatuses.findByIdAndUpdate(id, request.body);
 
          return response.status(200).json({
             success: true,
             data: update,
-            message: 'Currencie update successfully',
+            message: 'order statuses update successfully',
          });
       } catch (error) {
          return response.status(500).json({
             error: error.message,
             success: false,
-            message: 'Currencies retrieved successfully',
+            message: 'OrdersStatuses retrieved successfully',
          });
       }
    }
 
    /**
-    * Delete Currencie
+    * Delete order statuses
     * @param {*} request
     * @param {*} response
     * @returns
@@ -114,18 +114,17 @@ export class CurrenciesController {
    static async delete(req, res) {
       try {
          const { id } = req.params;
-         await Currencies.findByIdAndDelete(id);
+         await OrdersStatuses.findByIdAndDelete(id);
 
          return res.status(200).json({
             success: true,
-            message: 'Currencie deleted successfully',
+            message: 'order statuses deleted successfully',
          });
       } catch (error) {
          return res.status(500).json({
             success: false,
-            message: 'Could not retrieve Currencie. Try again later.',
+            message: 'Could not retrieve order statuses. Try again later.',
          });
       }
    }
 }
-
