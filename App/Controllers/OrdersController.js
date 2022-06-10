@@ -1,36 +1,133 @@
 import Orders from '../Models/Orders.js';
+import { OrderRepository } from '../Repositories/OrderRepository.js';
+import auth from '../Utils/auth.js';
+
 export class OrdersController {
-   static async index(req, res) {
+   constructor() {}
+
+   static async index(request, response) {
       try {
-         const orders = await Orders.find();
+         const { id: user_id } = await auth(request);
+         const orders = await OrderRepository.get({
+            user_id,
+         });
 
-         if (!orders)
-            return res.status(404).json({
-               success: false,
-               message: 'Orders not found',
-            });
-
-         return res.status(200).json({
+         return response.json({
             success: true,
             data: orders,
             message: 'Orders retrieved successfully',
          });
       } catch (error) {
-         return res.status(500).json({
+         return response.status(500).json({
+            error: error.message,
             success: false,
-            message: 'Could not process your request. Try again later.',
+            message: 'Could not process your request now. Try again later',
          });
       }
    }
 
-   /* static async getOrdersStatuses(req, res) {
-      await _find((err, orders_statuses) => {
-         if (err) return res.status(404).json({ Error: err.message });
-         return res.status(200).json({
-            success: true,
-            data: orders_statuses,
-            message: 'Order Statuses retrieved successfully',
+   static async show(request, response) {
+      try {
+         const { id: user_id } = await auth(request);
+
+         const orders = await OrderRepository.get({
+            user_id,
+            id: parseInt(request.params.id),
          });
-      });
-   } */
+
+         if (orders.length <= 0)
+            return response
+               .status(404)
+               .json({ success: false, message: 'Order not found' });
+
+         return response.json({
+            success: true,
+            data: orders[0],
+            message: 'Orders retrieved successfully',
+         });
+      } catch (error) {
+         return response.status(500).json({
+            error: error.message,
+            success: false,
+            message: 'Could not process your request now. Try again later',
+         });
+      }
+   }
+
+   static async orderParameters(request, response) {
+      try {
+         const parameteres = await OrderRepository.getParameters(request.body);
+
+         return response.json({
+            success: true,
+            data: parameteres,
+            message: 'Orders retrieved successfully',
+         });
+      } catch (error) {
+         return response.status(500).json({
+            error: error,
+            success: false,
+            message: 'Could not process your request now. Try again later',
+         });
+      }
+   }
+
+   static async pix(request, response) {
+      try {
+         const pix = await OrderRepository.getPix(request.body);
+
+         if (!pix.data)
+            return response.json({
+               success: false,
+               message: 'Pix invoice not retrieved',
+            });
+
+         return response.json({
+            success: true,
+            data: pix.data,
+            message: 'Orders retrieved successfully',
+         });
+      } catch (error) {
+         return response.status(500).json({
+            error: error.message,
+            success: false,
+            message: 'Could not process your request now. Try again later',
+         });
+      }
+   }
+
+   static async register(request, response) {
+      try {
+         const { user_id, cIDCompany, cIDProduct, quantity } = request.body;
+
+         const cart = await Orders.findOne({
+            user_id,
+            cIDCompany,
+            cIDProduct,
+         });
+
+         if (cart) {
+            cart.quantity += quantity;
+            await cart.save();
+         } else {
+            await Orders.create({
+               user_id,
+               cIDCompany,
+               cIDProduct,
+               quantity,
+            });
+         }
+
+         return response.json({
+            success: true,
+            message: 'Cart added successfully',
+         });
+      } catch (error) {
+         return response.status(500).json({
+            success: false,
+            message:
+               'Could not possible process your request now. Try again later',
+         });
+      }
+   }
 }
