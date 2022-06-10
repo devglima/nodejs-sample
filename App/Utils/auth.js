@@ -6,8 +6,11 @@ const auth = async (req) => {
    headers = headers ? headers.split(' ') : []; // ['Bearer', 'token']
 
    const token = headers[1]; //Get token string\
-   return jwt.verify(token, process.env.SECRET, (err, decoded) => {
-      if (!err) return decoded;
+   return jwt.verify(token, process.env.SECRET, async (err, decoded) => {
+      if (!err) {
+         const user = await User.findById(decoded.id);
+         return user;
+      }
    });
 };
 
