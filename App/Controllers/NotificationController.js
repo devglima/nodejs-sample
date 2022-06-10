@@ -1,4 +1,4 @@
-import Notifications from '../Models/Notifications.js';
+import Notifications from '../Models/Notification.js';
 import NotificationTypes from '../Models/NotificationTypes.js';
 
 export class NotificationsController {
