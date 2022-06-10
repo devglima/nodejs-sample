@@ -15,6 +15,7 @@ Route.get('/carts', authenticate, CartController.index)
    )
    .post('/carts/create', authenticate, CartController.add)
    .put('/carts/update', authenticate, CartController.add)
+   .get('/carts/:id', authenticate, CartController.show)
    .delete('/carts/delete/:id', authenticate, CartController.delete);
 
 export default Route;
