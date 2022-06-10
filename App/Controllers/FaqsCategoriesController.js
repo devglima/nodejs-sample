@@ -1,4 +1,4 @@
-import FaqsCategories from '../Models/FaqsCategories.js';
+import FaqsCategories from '../Models/FaqCategories.js';
 
 export class FaqsCategoriesController {
    static async index(req, res) {
