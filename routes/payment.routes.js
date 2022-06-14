@@ -6,12 +6,14 @@ import { authenticate } from '../App/Middleware/AuthMiddleware.js';
 
 const Route = Router();
 
-Route.get('/payments', authenticate, PaymentController.index)
-   .post(
+Route
+   /* .post(
       '/payments/parameters',
       authenticate,
       PaymentController.orderParameters
-   )
-   .post('/payments/pix', authenticate, PaymentController.pix);
+   ) */
+   .post('/payments/pix', authenticate, PaymentController.pix)
+   .get('/payments', authenticate, PaymentController.index)
+   .get('/payments/:id', authenticate, PaymentController.show);
 
 export default Route;
