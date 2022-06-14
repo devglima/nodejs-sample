@@ -1,16 +1,20 @@
 import Payment from '../Models/Payments.js';
 import { PaymentRepository } from '../Repositories/PaymentRepository.js';
+import auth from '../Utils/auth.js';
 
 export class PaymentController {
    constructor() {}
 
    static async index(request, response) {
       try {
-         const orders = await PaymentRepository.get();
+         const { id: user_id } = await auth(request);
+         const payments = await PaymentRepository.get({
+            user_id,
+         });
 
          return response.json({
             success: true,
-            data: orders,
+            data: payments,
             message: 'Payment retrieved successfully',
          });
       } catch (error) {
@@ -22,20 +26,28 @@ export class PaymentController {
       }
    }
 
-   static async orderParameters(request, response) {
+   static async show(request, response) {
       try {
-         const parameteres = await PaymentRepository.getParameters(
-            request.body
-         );
+         const { id: user_id } = await auth(request);
+
+         const orders = await PaymentRepository.get({
+            user_id,
+            id: parseInt(request.params.id),
+         });
+
+         if (orders.length <= 0)
+            return response
+               .status(404)
+               .json({ success: false, message: 'Order not found' });
 
          return response.json({
             success: true,
-            data: parameteres,
-            message: 'Payment retrieved successfully',
+            data: orders[0],
+            message: 'Orders retrieved successfully',
          });
       } catch (error) {
          return response.status(500).json({
-            error: error,
+            error: error.message,
             success: false,
             message: 'Could not process your request now. Try again later',
          });
