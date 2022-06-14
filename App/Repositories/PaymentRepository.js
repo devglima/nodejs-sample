@@ -2,8 +2,11 @@ import Payments from '../Models/Payments.js';
 import axios from 'axios';
 
 export class PaymentRepository {
-   static async get() {
+   static async get($match = {}) {
       return await Payments.aggregate([
+         {
+            $match,
+         },
          {
             $lookup: {
                from: 'users',
@@ -17,37 +20,9 @@ export class PaymentRepository {
                ],
             },
          },
-         {
-            $lookup: {
-               from: 'order_statuses',
-               localField: 'order_status_id',
-               foreignField: 'id',
-               as: 'order_status',
-               pipeline: [
-                  {
-                     $project: { status: 1, _id: 0, id: 1 },
-                  },
-               ],
-            },
-         },
-         {
-            $lookup: {
-               from: 'payments',
-               localField: 'payment_id',
-               foreignField: 'id',
-               as: 'payment',
-               pipeline: [
-                  {
-                     $project: { status: 1, _id: 0, id: 1 },
-                  },
-               ],
-            },
-         },
          { $unwind: '$user' },
-         { $unwind: '$order_status' },
-         { $unwind: '$payment' },
       ])
-         //.sort({ created_at: 'desc' })
+         .sort({ created_at: 'desc' })
          .project({
             food_id: 0,
          });
