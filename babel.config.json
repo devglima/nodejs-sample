@@ -14,12 +14,12 @@
          "module-resolver",
          {
             "root": [
-               "./"
+               "./src"
             ],
             "alias": {
-               "App": "./App",
-               "Models": "./App/Models",
-               "Controllers": "./src/controllers"
+               "App": "./src",
+               "Model": "./Models",
+               "Controller": "./controllers"
             }
          }
       ]
