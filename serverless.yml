@@ -1,0 +1,17 @@
+service: b2b-node
+frameworkVersion: '3'
+
+#plugins:
+#   - serverless-ignore
+
+provider:
+   name: aws
+   runtime: nodejs16.x
+   httpApi:
+      cors: true
+
+functions:
+   api:
+      handler: app.handler
+      events:
+         - httpApi: '*'
