@@ -1,7 +1,18 @@
 import Orders from '../Models/Orders.js';
 import axios from 'axios';
+import auth from '../Utils/auth.js';
 
 export class OrderRepository {
+   static async create(req) {
+      const { user_id, order_status_id, tax } = req.body;
+
+      return await Orders.create({
+         user_id,
+         order_status_id,
+         tax,
+      });
+   }
+
    static async get($match) {
       return await Orders.aggregate([
          {
@@ -41,7 +52,7 @@ export class OrderRepository {
                as: 'payment',
                pipeline: [
                   {
-                     $project: { status: 1, id: 1 },
+                     $project: { status: true, id: true, price: true },
                   },
                ],
             },
