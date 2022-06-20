@@ -2,6 +2,18 @@ import Payments from '../Models/Payments.js';
 import axios from 'axios';
 
 export class PaymentRepository {
+   static async paymentCash(req) {
+      const { user_id, price, method } = req.body;
+
+      return await Payments.create({
+         user_id,
+         price,
+         method,
+         status: 'Esperando Cliente',
+         description: 'Payment pending',
+      });
+   }
+
    static async get($match = {}) {
       return await Payments.aggregate([
          {
