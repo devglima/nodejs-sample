@@ -1,9 +1,38 @@
-import Orders from '../Models/Orders.js';
 import { OrderRepository } from '../Repositories/OrderRepository.js';
+import { PaymentRepository } from '../Repositories/PaymentRepository.js';
 import auth from '../Utils/auth.js';
 
 export class OrdersController {
    constructor() {}
+
+   static async store(request, response) {
+      try {
+         const { id: userId } = await auth(request);
+         const { method } = request.body;
+
+         /* if (method === 'Credit Card (Stripe Gateway)') return;
+         else if (method === 'Credit Card (Iugu Gateway)') return;
+         else */
+
+         request.body.user_id = userId; //Setting user id to req body
+         const order = await OrderRepository.create(request);
+
+         if (order.id) await PaymentRepository.paymentCash(request);
+
+         return response.status(200).json({
+            success: true,
+            data: order,
+            message: 'Order registered successfully',
+         });
+      } catch (error) {
+         return response.status(500).json({
+            error: error.message,
+            success: false,
+            message:
+               'Could not possible process your request now. Try again later',
+         });
+      }
+   }
 
    static async index(request, response) {
       try {
@@ -92,41 +121,6 @@ export class OrdersController {
             error: error.message,
             success: false,
             message: 'Could not process your request now. Try again later',
-         });
-      }
-   }
-
-   static async register(request, response) {
-      try {
-         const { user_id, cIDCompany, cIDProduct, quantity } = request.body;
-
-         const cart = await Orders.findOne({
-            user_id,
-            cIDCompany,
-            cIDProduct,
-         });
-
-         if (cart) {
-            cart.quantity += quantity;
-            await cart.save();
-         } else {
-            await Orders.create({
-               user_id,
-               cIDCompany,
-               cIDProduct,
-               quantity,
-            });
-         }
-
-         return response.json({
-            success: true,
-            message: 'Cart added successfully',
-         });
-      } catch (error) {
-         return response.status(500).json({
-            success: false,
-            message:
-               'Could not possible process your request now. Try again later',
          });
       }
    }
