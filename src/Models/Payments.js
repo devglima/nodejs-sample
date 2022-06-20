@@ -7,15 +7,14 @@ const { Schema, model } = mongoose;
 
 const PaymentSchema = new Schema(
    {
-      id: { type: Number, required: true },
+      user_id: { type: Number, required: true },
       price: { type: Number, required: true },
       description: { type: String, required: true },
-      user_id: { type: Number, required: true },
-      status: { type: Number, required: true },
-      method: { type: Number, required: true },
-      invoice_url: { type: Number },
-      invoice_pdf: { type: Number },
-      invoice_id: { type: Number },
+      status: { type: String, required: true },
+      method: { type: String, required: true },
+      invoice_url: { type: String },
+      invoice_pdf: { type: String },
+      invoice_id: { type: String },
    },
    {
       timestamps: {
