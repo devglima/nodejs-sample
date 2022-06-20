@@ -17,7 +17,10 @@ const OrderStatusSchema = new Schema(
    }
 );
 
-OrderStatusSchema.plugin(AutoIncrement, { id: 'order_id', inc_field: 'id' });
+OrderStatusSchema.plugin(AutoIncrement, {
+   id: 'order_status_id',
+   inc_field: 'id',
+});
 const OrderStatus = model('orders', OrderStatusSchema);
 
 export default OrderStatus;
