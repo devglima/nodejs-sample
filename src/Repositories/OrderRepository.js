@@ -13,11 +13,13 @@ export class OrderRepository {
    }
 
    static async get($match) {
-      return await Orders.aggregate([
+      return Orders.find().where($match);
+
+      /* await Orders.aggregate([
          {
             $match,
          },
-         /* {
+          {
             $lookup: {
                from: 'users',
                localField: 'id',
@@ -29,7 +31,7 @@ export class OrderRepository {
                   },
                ],
             },
-         }, */
+         }, 
          /* {
             $lookup: {
                from: 'order_statuses',
@@ -55,7 +57,7 @@ export class OrderRepository {
                   },
                ],
             },
-         }, */
+         }, 
          //{ $unwind: '$user' },
          //{ $unwind: '$order_status' },
          //{ $unwind: '$payment' },
@@ -63,7 +65,7 @@ export class OrderRepository {
          .sort({ created_at: 'desc' })
          .project({
             food_id: 0,
-         });
+         }); */
    }
 
    static async getParameters(data) {
