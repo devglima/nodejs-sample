@@ -1,3 +1,4 @@
+import Orders from '../Models/Orders.js';
 import { OrderRepository } from '../Repositories/OrderRepository.js';
 import { PaymentRepository } from '../Repositories/PaymentRepository.js';
 import auth from '../Utils/auth.js';
@@ -37,9 +38,7 @@ export class OrdersController {
    static async index(request, response) {
       try {
          const { id: user_id } = await auth(request);
-         const orders = await OrderRepository.get({
-            user_id,
-         });
+         const orders = await Orders.find();
 
          return response.json({
             success: true,
