@@ -13,7 +13,7 @@ export class OrderRepository {
    }
 
    static async get($match) {
-      return Orders.find();
+      return await Orders.find();
 
       /* await Orders.aggregate([
          {
