@@ -23,7 +23,7 @@ export class OrdersController {
          return response.status(200).json({
             success: true,
             data: order,
-            message: 'Order registered successfully',
+            message: 'Order registered successfullydd',
          });
       } catch (error) {
          return response.status(500).json({
