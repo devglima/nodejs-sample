@@ -58,10 +58,7 @@ export class OrdersController {
       try {
          const { id: user_id } = await auth(request);
 
-         const orders = await OrderRepository.get({
-            user_id,
-            id: parseInt(request.params.id),
-         });
+         const orders = await Orders.find();
 
          if (orders.length <= 0)
             return response
