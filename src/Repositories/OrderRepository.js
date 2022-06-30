@@ -1,6 +1,5 @@
 import Orders from '../Models/Orders.js';
 import axios from 'axios';
-import auth from '../Utils/auth.js';
 
 export class OrderRepository {
    static async create(req) {
@@ -30,8 +29,11 @@ export class OrderRepository {
                   },
                ],
             },
+            $set: {
+               n: 1,
+            },
          },
-         {
+         /* {
             $lookup: {
                from: 'order_statuses',
                localField: 'order_status_id',
@@ -56,10 +58,10 @@ export class OrderRepository {
                   },
                ],
             },
-         },
+         }, */
          { $unwind: '$user' },
-         { $unwind: '$order_status' },
-         { $unwind: '$payment' },
+         //{ $unwind: '$order_status' },
+         //{ $unwind: '$payment' },
       ])
          .sort({ created_at: 'desc' })
          .project({
