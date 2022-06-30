@@ -20,17 +20,14 @@ export class OrderRepository {
          {
             $lookup: {
                from: 'users',
-               localField: 'user_id',
-               foreignField: 'id',
+               localField: 'id',
+               foreignField: 'user_id',
                as: 'user',
                pipeline: [
                   {
                      $project: { name: 1, id: 1, email: 1 },
                   },
                ],
-            },
-            $set: {
-               n: 1,
             },
          },
          /* {
