@@ -11,6 +11,7 @@ import { authenticate } from './../Middleware/AuthMiddleware.js';
 import { AuthController } from './../Controllers/AuthController.js';
 
 import { SettingsController } from './../Controllers/SettingsController.js';
+import { PasswordController } from '../Controllers/PasswordController.js';
 
 //Import routes files here
 
@@ -38,12 +39,16 @@ Route.post('/login', AuthController.login)
    .post('/register', AuthController.register)
    .post('/logout', AuthController.logout);
 
-//Settings app routes
-Route.get('/settings', authenticate, SettingsController.index).put(
-   '/settings/update',
-   authenticate,
-   SettingsController.update
+//Password reset
+Route.post('/password/forgot', PasswordController.forgot).post(
+   '/password/reset',
+   PasswordController.reset
 );
+
+//Settings app routes
+Route.get('/settings', authenticate, SettingsController.index)
+   .put('/settings/update', authenticate, SettingsController.update)
+   .get('/settings/:key', authenticate, SettingsController.show);
 
 //Call others routes here
 Route.use(
