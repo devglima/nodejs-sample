@@ -7,7 +7,7 @@ const { Schema, model } = mongoose;
 
 const OrdersSchema = new Schema(
    {
-      user_id: { type: Number, required: true },
+      user_id: { type: mongoose.Types.ObjectId, required: true },
       order_status_id: { type: Number, required: true },
       tax: { type: Number },
       hint: { type: String },

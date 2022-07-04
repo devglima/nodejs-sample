@@ -7,7 +7,7 @@ const { Schema, model } = mongoose;
 
 const PaymentSchema = new Schema(
    {
-      user_id: { type: Number, required: true },
+      user_id: { type: mongoose.Types.ObjectId, required: true },
       price: { type: Number, required: true },
       description: { type: String, required: true },
       status: { type: String, required: true },
