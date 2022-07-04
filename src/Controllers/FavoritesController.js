@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Favorites from '../Models/Favorites.js';
 import auth from '../Utils/auth.js';
 
@@ -12,7 +13,10 @@ export class FavoritesController {
    static async index(request, response) {
       try {
          const { id: user_id } = await auth(request);
-         const favorites = await Favorites.find();
+
+         const favorites = await Favorites.find({
+            user_id: mongoose.Types.ObjectId(user_id),
+         });
 
          return response.status(200).send({
             success: true,
