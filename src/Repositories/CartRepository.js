@@ -1,27 +1,11 @@
 import axios from 'axios';
 import Cart from '../Models/Carts.js';
 import Products from '../Models/Foods.js';
+import User from '../Models/user.js';
 
 export class CartRepository {
    static async get($match) {
-      let carts = await Cart.aggregate([
-         {
-            $match,
-         },
-         {
-            $lookup: {
-               from: 'users',
-               localField: 'user_id',
-               foreignField: 'id',
-               as: 'user',
-               pipeline: [
-                  {
-                     $project: { name: 1, email: 1 },
-                  },
-               ],
-            },
-         },
-      ])
+      let carts = await Cart.aggregate([{ $match }])
          .sort({ created_at: 'desc' })
          .project({
             food_id: 0,
@@ -30,12 +14,17 @@ export class CartRepository {
 
       //Get products by cIdPRoduct and cIDCompany
       carts = carts.map(async (cart) => {
-         var product = await Products.findOne({
+         cart.user = await User.findOne({ id: cart.user_id }).select({
+            id: 1,
+            name: 1,
+            email: 1,
+         });
+
+         cart.product = await Products.findOne({
             cIDCompany: cart.cIDCompany,
             cIDProduct: cart.cIDProduct,
          }).select({ cIDProduct: 0, cIDCompany: 0 });
 
-         cart.product = product;
          return cart;
       });
 

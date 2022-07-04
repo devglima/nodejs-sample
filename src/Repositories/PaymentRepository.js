@@ -1,5 +1,6 @@
 import Payments from '../Models/Payments.js';
 import axios from 'axios';
+import User from '../Models/user.js';
 
 export class PaymentRepository {
    static async paymentCash(req) {
@@ -15,29 +16,23 @@ export class PaymentRepository {
    }
 
    static async get($match = {}) {
-      return await Payments.aggregate([
-         {
-            $match,
-         },
-         {
-            $lookup: {
-               from: 'users',
-               localField: 'user_id',
-               foreignField: 'id',
-               as: 'user',
-               pipeline: [
-                  {
-                     $project: { name: 1, email: 1 },
-                  },
-               ],
-            },
-         },
-         { $unwind: '$user' },
-      ])
+      let payments = await Payments.aggregate([{ $match }])
          .sort({ created_at: 'desc' })
          .project({
             food_id: 0,
          });
+
+      payments = payments.map(async (payment) => {
+         payment.user = await User.findOne({ id: payment.user_id }).select({
+            id: 1,
+            name: 1,
+            email: 1,
+         });
+
+         return payment;
+      });
+
+      return await Promise.all(payments);
    }
 
    static async getParameters(data) {

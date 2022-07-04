@@ -4,22 +4,50 @@ export class SettingsController {
    constructor() {}
 
    static async index(request, response) {
-      return response.send({
-         success: true,
-         data: await Settings.find(),
-      });
+      try {
+         return response.send({
+            success: true,
+            data: await Settings.find(),
+         });
+      } catch (error) {
+         return response.status(500).send({
+            error,
+            success: false,
+            message: 'Could not possible process your request',
+         });
+      }
+   }
+
+   static async show(request, response) {
+      try {
+         const { key } = request.params;
+         const setting = await Settings.findOne({ key });
+
+         return response.send({
+            success: true,
+            data: setting,
+         });
+      } catch (error) {
+         return response.status(500).send({
+            error: error.message,
+            success: false,
+            message: 'Could not possible process your request',
+         });
+      }
    }
 
    static async update(request, response) {
-      try {
-         await Settings.updateOne(request.body);
+      const { key, values: value } = request.body;
 
-         return response.status(422).send({
+      try {
+         await Settings.updateOne({ key }, { value: value }, { upsert: true });
+
+         return response.status(200).send({
             success: true,
-            data: 'Settings updated successfully',
+            message: 'Settings updated successfully',
          });
       } catch (error) {
-         return response.status(422).send({
+         return response.status(500).send({
             error,
             success: false,
             message: 'Could not possible process your request',

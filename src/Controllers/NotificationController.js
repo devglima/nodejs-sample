@@ -1,5 +1,6 @@
 import Notifications from '../Models/Notification.js';
 import NotificationTypes from '../Models/NotificationTypes.js';
+import auth from '../Utils/auth.js';
 
 export class NotificationsController {
    /**
@@ -11,7 +12,8 @@ export class NotificationsController {
 
    static async index(request, response) {
       try {
-         const notifications = await Notifications.find();
+         const { id: user_id } = await auth(request);
+         const notifications = await Notifications.find({ user_id });
 
          return response.status(200).send({
             success: true,
@@ -135,7 +137,7 @@ export class NotificationsController {
     * @param {*} response
     * @returns
     */
-    static async getNotificationTypes(request, response) {
+   static async getNotificationTypes(request, response) {
       try {
          const notifications = await NotificationTypes.find();
 
@@ -150,6 +152,6 @@ export class NotificationsController {
             success: false,
             message: 'Notifications not retrieved',
          });
-      } 
+      }
    }
 }
