@@ -12,7 +12,7 @@ export class NotificationsController {
 
    static async index(request, response) {
       try {
-         const { id: user_id } = await auth(request);
+         const { _id: user_id } = await auth(request);
          const notifications = await Notifications.find({ user_id });
 
          return response.status(200).send({

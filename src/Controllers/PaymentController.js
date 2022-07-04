@@ -7,7 +7,7 @@ export class PaymentController {
 
    static async index(request, response) {
       try {
-         const { id: user_id } = await auth(request);
+         const { _id: user_id } = await auth(request);
          const payments = await PaymentRepository.get({
             user_id,
          });

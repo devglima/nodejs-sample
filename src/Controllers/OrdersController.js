@@ -37,7 +37,7 @@ export class OrdersController {
 
    static async index(request, response) {
       try {
-         const { id: user_id } = await auth(request);
+         const { _id: user_id } = await auth(request);
          const orders = await OrderRepository.get({ user_id });
 
          return response.json({
