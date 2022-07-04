@@ -23,7 +23,7 @@ export class PaymentRepository {
          });
 
       payments = payments.map(async (payment) => {
-         payment.user = await User.findOne({ id: payment.user_id }).select({
+         payment.user = await User.findById(payment.user_id).select({
             id: 1,
             name: 1,
             email: 1,

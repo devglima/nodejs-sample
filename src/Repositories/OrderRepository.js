@@ -20,7 +20,7 @@ export class OrderRepository {
       });
 
       orders = orders.map(async (order) => {
-         order.user = await User.findOne({ id: order.user_id }).select({
+         order.user = await User.findById(order.user_id).select({
             id: 1,
             name: 1,
             email: 1,
