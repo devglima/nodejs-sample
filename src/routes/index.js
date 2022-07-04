@@ -46,9 +46,9 @@ Route.post('/login', AuthController.login)
 ); */
 
 //Settings app routes
-Route.get('/settings', authenticate, SettingsController.index)
+/* Route.get('/settings', authenticate, SettingsController.index)
    .put('/settings/update', authenticate, SettingsController.update)
-   .get('/settings/:key', authenticate, SettingsController.show);
+   .get('/settings/:key', authenticate, SettingsController.show); */
 
 //Call others routes here
 Route.use(
