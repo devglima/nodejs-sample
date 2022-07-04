@@ -2,6 +2,7 @@ import Orders from '../Models/Orders.js';
 import axios from 'axios';
 import User from '../Models/user.js';
 import OrderStatus from '..//Models/OrdersStatuses.js';
+import Payments from '../Models/Payments.js';
 
 export class OrderRepository {
    static async create(req) {
@@ -29,6 +30,14 @@ export class OrderRepository {
          order.orderStatus = await OrderStatus.findOne({
             id: order.order_status_id,
          }).select({ id: 1, status: 1 });
+
+         order.payment = await Payments.findById(order.user_id).select({
+            id: 1,
+            price: 1,
+            status: 1,
+            description: 1,
+            method: 1,
+         });
 
          return order;
       });
