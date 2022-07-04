@@ -31,7 +31,9 @@ export class OrderRepository {
             id: order.order_status_id,
          }).select({ id: 1, status: 1 });
 
-         order.payment = await Payments.findById(order.user_id).select({
+         order.payment = await Payments.findOne({
+            user_id: order.user_id,
+         }).select({
             id: 1,
             price: 1,
             status: 1,
