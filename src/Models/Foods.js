@@ -74,7 +74,7 @@ const ProductsSchema = new Schema(
 );
 
 ProductsSchema.plugin(AutoIncrement, {
-   id: 'order_status_id',
+   id: 'food_id',
    inc_field: 'id',
 });
 
