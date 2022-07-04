@@ -9,7 +9,7 @@ export class OrdersController {
    static async store(request, response) {
       try {
          const { id: userId } = await auth(request);
-         const { method } = request.body;
+         //const { method } = request.body;
 
          /* if (method === 'Credit Card (Stripe Gateway)') return;
          else if (method === 'Credit Card (Iugu Gateway)') return;
@@ -38,7 +38,7 @@ export class OrdersController {
    static async index(request, response) {
       try {
          const { id: user_id } = await auth(request);
-         const orders = await Orders.find();
+         const orders = await OrderRepository.get({ user_id });
 
          return response.json({
             success: true,
