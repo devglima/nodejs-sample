@@ -28,6 +28,7 @@ import notificationRoute from './notification.routes.js';
 import orderStatusesRoute from './order.statuses.routes.js';
 import cartRoute from './cart.routes.js';
 import paymentRoutes from './payment.routes.js';
+//import paymentRoutes from './payment.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
