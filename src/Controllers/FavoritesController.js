@@ -20,6 +20,7 @@ export class FavoritesController {
 
          return response.status(200).send({
             success: true,
+            id: user_id,
             data: favorites,
             message: 'Favorites retrieved successfully',
          });
