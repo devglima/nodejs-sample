@@ -11,7 +11,7 @@ import { authenticate } from './../Middleware/AuthMiddleware.js';
 import { AuthController } from './../Controllers/AuthController.js';
 
 import { SettingsController } from './../Controllers/SettingsController.js';
-import { PasswordController } from '../Controllers/PasswordController.js';
+//import { PasswordController } from '../Controllers/PasswordController.js';
 
 //Import routes files here
 
@@ -28,7 +28,6 @@ import notificationRoute from './notification.routes.js';
 import orderStatusesRoute from './order.statuses.routes.js';
 import cartRoute from './cart.routes.js';
 import paymentRoutes from './payment.routes.js';
-//import paymentRoutes from './payment.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -41,10 +40,10 @@ Route.post('/login', AuthController.login)
    .post('/logout', AuthController.logout);
 
 //Password reset
-Route.post('/password/forgot', PasswordController.forgot).post(
+/* Route.post('/password/forgot', PasswordController.forgot).post(
    '/password/reset',
    PasswordController.reset
-);
+); */
 
 //Settings app routes
 Route.get('/settings', authenticate, SettingsController.index)
