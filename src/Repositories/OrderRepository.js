@@ -1,5 +1,7 @@
 import Orders from '../Models/Orders.js';
 import axios from 'axios';
+import User from '../Models/user.js';
+import OrderStatus from '..//Models/OrdersStatuses.js';
 
 export class OrderRepository {
    static async create(req) {
@@ -13,57 +15,25 @@ export class OrderRepository {
    }
 
    static async get($match) {
-      return await Orders.aggregate([
-         {
-            $match,
-         },
-         {
-            $lookup: {
-               from: 'users',
-               localField: 'user_id',
-               foreignField: 'id',
-               as: 'user',
-               pipeline: [
-                  {
-                     $project: { name: 1, id: 1, email: 1 },
-                  },
-               ],
-            },
-         },
-         /* {
-            $lookup: {
-               from: 'order_statuses',
-               localField: 'order_status_id',
-               foreignField: 'id',
-               as: 'order_status',
-               pipeline: [
-                  {
-                     $project: { status: 1, id: 1 },
-                  },
-               ],
-            },
-         },
-         {
-            $lookup: {
-               from: 'payments',
-               localField: 'payment_id',
-               foreignField: 'id',
-               as: 'payment',
-               pipeline: [
-                  {
-                     $project: { status: true, id: true, price: true },
-                  },
-               ],
-            },
-         //{ $unwind: '$user' },
-         //{ $unwind: '$order_status' },
-         }, */
-         //{ $unwind: '$payment' },
-      ])
-         .sort({ created_at: 'desc' })
-         .project({
-            food_id: 0,
+      let orders = await Orders.aggregate([{ $match }]).sort({
+         createdAt: 'desc',
+      });
+
+      orders = orders.map(async (order) => {
+         order.user = await User.findOne({ id: order.user_id }).select({
+            id: 1,
+            name: 1,
+            email: 1,
          });
+
+         order.orderStatus = await OrderStatus.findOne({
+            id: order.order_status_id,
+         }).select({ id: 1, status: 1 });
+
+         return order;
+      });
+
+      return await Promise.all(orders);
    }
 
    static async getParameters(data) {
