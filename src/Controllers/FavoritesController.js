@@ -12,7 +12,7 @@ export class FavoritesController {
    static async index(request, response) {
       try {
          const { id: user_id } = await auth(request);
-         const favorites = await Favorites.find({ user_id });
+         const favorites = await Favorites.find();
 
          return response.status(200).send({
             success: true,
