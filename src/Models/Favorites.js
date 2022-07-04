@@ -9,7 +9,7 @@ const FavoritesSchema = new Schema({
       required: true,
    },
    user_id: {
-      type: Number,
+      type: mongoose.Types.ObjectId,
       required: true,
    },
    cIDCompany: {
