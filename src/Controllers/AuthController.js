@@ -11,7 +11,6 @@ export class AuthController {
          const { email, password } = request.body;
 
          const user = await User.findOne({ email });
-
          if (!user)
             return response.status(422).json({
                success: false,
@@ -29,11 +28,14 @@ export class AuthController {
          });
 
          user.password = undefined;
+
          return response.status(200).json({
             success: true,
             message: 'User retrieved successfully',
-            token: token,
-            data: user,
+            data: {
+               token,
+               ...user._doc,
+            },
          });
       } catch (error) {
          return response.status(500).json({
