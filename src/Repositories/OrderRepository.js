@@ -13,15 +13,15 @@ export class OrderRepository {
    }
 
    static async get($match) {
-      await Orders.aggregate([
+      return await Orders.aggregate([
          {
             $match,
          },
          {
             $lookup: {
                from: 'users',
-               localField: 'id',
-               foreignField: 'user_id',
+               localField: 'user_id',
+               foreignField: 'id',
                as: 'user',
                pipeline: [
                   {
