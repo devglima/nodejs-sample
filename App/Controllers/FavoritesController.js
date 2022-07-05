@@ -1,4 +1,5 @@
 import Favorites from '../Models/Favorites.js';
+import { FavoritesRepository } from '../Repositories/FavoritesRepository.js';
 
 export class FavoritesController {
    /**
@@ -10,7 +11,10 @@ export class FavoritesController {
 
    static async index(request, response) {
       try {
-         const favorites = await favorites.find();
+         const { id: user_id } = await auth(request);
+         const favorites = await FavoritesRepository.get({
+            user_id,
+         });
 
          return response.status(200).send({
             success: true,
