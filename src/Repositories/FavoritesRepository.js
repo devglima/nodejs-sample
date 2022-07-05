@@ -20,6 +20,7 @@ export class FavoritesRepository {
             featured: 1,
             cIDProduct: 1,
             cIDCompany: 1,
+            cImage: 1,
             xIDUnitMeasureType: 1,
          });
 
