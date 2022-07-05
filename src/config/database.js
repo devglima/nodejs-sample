@@ -23,14 +23,10 @@ async function connectToDatabase() {
       minPoolSize: 2,
       maxPoolSize: 4,
    };
-   const client = await mongoose.connect(
-      process.env.DATABASE_URL,
-      options,
-      (err) => {
-         if (err) console.log(err);
-         else console.log('Connected to database');
-      }
-   );
+   const client = mongoose.connect(process.env.DATABASE_URL, options, (err) => {
+      if (err) console.log(err);
+      else console.log('Connected to database');
+   });
    cachedDb = client;
    return client;
 }
