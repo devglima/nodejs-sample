@@ -3,6 +3,8 @@ import axios from 'axios';
 import User from '../Models/user.js';
 import OrderStatus from '..//Models/OrdersStatuses.js';
 import Payments from '../Models/Payments.js';
+import ProductOrders from '../Models/FoodOrders.js';
+import Foods from '../Models/Foods.js';
 
 export class OrderRepository {
    static async create(req) {
