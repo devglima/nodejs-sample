@@ -41,6 +41,31 @@ export class OrderRepository {
             method: 1,
          });
 
+         order.food_orders = await ProductOrders.find({ order_id: order.id }).select({
+            id: 1,
+            price: 1,
+            quantity: 1,
+            order_id: 1,
+            cIDProduct: 1,
+            created_at: 1
+         });
+
+         order.food_orders.food = await Foods.find({ cIDProduct: order.food_orders.cIDProduct }).select({
+            id: 1,
+            name: 1,
+            price: 1,
+            discountPrice: 1,
+            image: 1,
+            description: 1,
+            ingredients: 1,
+            weight: 1,
+            featured: 1,
+            cIDProduct: 1,
+            cIDCompany: 1,
+            cImage: 1,
+            xIDUnitMeasureType: 1,
+         });
+
          return order;
       });
 
