@@ -41,7 +41,14 @@ export class OrderRepository {
             method: 1,
          });
 
-         order.food_orders = await ProductOrders.find({ order_id: order.id }).select({
+         //Order products
+         let foodOrders = await ProductOrders.aggregate([
+            {
+               $match: {
+                  order_id: order.id,
+               },
+            },
+         ]).project({
             price: 1,
             quantity: 1,
             order_id: 1,
@@ -49,21 +56,21 @@ export class OrderRepository {
             created_at: 1,
          });
 
-         order.food_orders.foods = await Foods.find({ cIDProduct: order.food_orders.cIDProduct }).select({
-            name: 1,
-            price: 1,
-            discountPrice: 1,
-            image: 1,
-            description: 1,
-            ingredients: 1,
-            weight: 1,
-            featured: 1,
-            cIDProduct: 1,
-            cIDCompany: 1,
-            cImage: 1,
-            xIDUnitMeasureType: 1,
+         foodOrders = foodOrders.map(async (item) => {
+            item.food = await Foods.findOne({
+               cIDProduct: item.cIDProduct,
+            }).select({
+               id: 1,
+               name: 1,
+               price: 1,
+               description: 1,
+               image: 1,
+            });
+
+            return item;
          });
 
+         order.food_orders = await Promise.all(foodOrders);
          return order;
       });
 
