@@ -49,7 +49,7 @@ export class OrderRepository {
             created_at: 1,
          });
 
-         order.food_orders.food = await Foods.find({ cIDProduct: order.food_orders.cIDProduct }).select({
+         order.foods = await Foods.find({ cIDProduct: order.food_orders.cIDProduct }).select({
             name: 1,
             price: 1,
             discountPrice: 1,
