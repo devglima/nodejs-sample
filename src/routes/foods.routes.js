@@ -11,6 +11,7 @@ Route.post('/foods/create', authenticate, FoodsController.create)
    .get('/food_orders', authenticate, FoodsController.foodsWithOrders)
    .get('/foods/:id', authenticate, FoodsController.show)
    .put('/foods/update/:id', authenticate, FoodsController.update)
+   .get('/foods/category/:categoryID', authenticate, FoodsController.foodsByCategory)
    .delete('/foods/delete/:id', authenticate, FoodsController.delete);
 
 export default Route;

@@ -177,5 +177,31 @@ export class FoodsController {
    static async food_filter(request, response) {
 
    }
+
+   /**
+   *
+   * @param {*} request
+   * @param {*} response
+   * @returns
+   */
+   static async foodsByCategory(request, response) {
+      var categoryID = req.params.categoryID;
+
+      try {
+         const foods = await Foods.find({ category_id: categoryID });
+
+         return response.status(200).send({
+            success: true,
+            data: foods,
+            message: "Foods retrieved successfully"
+         });
+      } catch (error) {
+         return response.status(500).send({
+            error: error.message,
+            success: false,
+            message: 'Could not process your request. Try again later.',
+         });
+      }
+   }
 }
 
