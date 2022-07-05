@@ -8,7 +8,7 @@ export class FavoritesRepository {
       });
 
       favorites = favorites.map(async (favorite) => {
-         order.food = await Foods.findById(favorite.cIDProduct).select({
+         favorite.food = await Foods.findById(favorite.cIDProduct).select({
             id: 1,
             name: 1,
             price: 1,
