@@ -191,7 +191,7 @@ export class FoodsController {
          const foods = await Foods.find({ category_id: categoryID });
 
          return response.status(200).send({
-            success: false,
+            success: true,
             data: foods,
             message: "Foods retrieved successfully"
          });

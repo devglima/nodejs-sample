@@ -44,7 +44,7 @@ const ProductsSchema = new Schema(
          required: true,
       },
       category_id: {
-         type: Number,
+         type: String,
          required: true,
       },
       created_at: {
