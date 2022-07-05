@@ -24,7 +24,6 @@ export class OrderRepository {
 
       orders = orders.map(async (order) => {
          order.user = await User.findById(order.user_id).select({
-            id: 1,
             name: 1,
             email: 1,
          });
@@ -36,7 +35,6 @@ export class OrderRepository {
          order.payment = await Payments.findOne({
             user_id: order.user_id,
          }).select({
-            id: 1,
             price: 1,
             status: 1,
             description: 1,
@@ -44,7 +42,6 @@ export class OrderRepository {
          });
 
          order.food_orders = await ProductOrders.find({ order_id: order.id }).select({
-            id: 1,
             price: 1,
             quantity: 1,
             order_id: 1,
@@ -53,7 +50,6 @@ export class OrderRepository {
          });
 
          order.food_orders.food = await Foods.find({ cIDProduct: order.food_orders.cIDProduct }).select({
-            id: 1,
             name: 1,
             price: 1,
             discountPrice: 1,
