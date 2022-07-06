@@ -28,6 +28,7 @@ import notificationRoute from './notification.routes.js';
 import orderStatusesRoute from './order.statuses.routes.js';
 import cartRoute from './cart.routes.js';
 import paymentRoutes from './payment.routes.js';
+import customCardRoutes from './custom_cards.routes.js';
 
 const Route = express.Router();
 Route.get('/', (req, res) => {
@@ -46,9 +47,9 @@ Route.post('/login', AuthController.login)
 ); */
 
 //Settings app routes
-/* Route.get('/settings', authenticate, SettingsController.index)
+Route.get('/settings', authenticate, SettingsController.index)
    .put('/settings/update', authenticate, SettingsController.update)
-   .get('/settings/:key', authenticate, SettingsController.show); */
+   .get('/settings/:key', authenticate, SettingsController.show);
 
 //Call others routes here
 Route.use(
@@ -64,7 +65,8 @@ Route.use(
    paymentRoutes,
    notificationRoute,
    orderStatusesRoute,
-   faqsCategoriesRoute
+   faqsCategoriesRoute,
+   customCardRoutes
 );
 
 export default Route;
