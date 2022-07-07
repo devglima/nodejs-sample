@@ -53,7 +53,7 @@ export class OrderRepository {
             quantity: 1,
             order_id: 1,
             cIDProduct: 1,
-            created_at: 1,
+            updated_at: 1,
          });
 
          foodOrders = foodOrders.map(async (item) => {
