@@ -1,4 +1,5 @@
 import Currencies from '../Models/Currencies.js';
+//import Orders from '../Models/Orders.js';
 
 export class CurrenciesController {
    /**
@@ -10,11 +11,21 @@ export class CurrenciesController {
 
    static async index(request, response) {
       try {
-         const currencies = await Currencies.find();
+         /* const paginateOptions = {
+            // page: parseInt(request.query.page ?? 1),
+            //limit: parseInt(request.query.limit ?? 20),
+            customLabels: {
+               docs: 'data',
+               limit: 'limit',
+               totalDocs: 'total',
+            },
+         }; */
+
+         const currencies = await Currencies.find({});
 
          return response.status(200).send({
-            success: true,
             data: currencies,
+            success: true,
             message: 'Currencies retrieved successfully',
          });
       } catch (error) {
@@ -128,4 +139,3 @@ export class CurrenciesController {
       }
    }
 }
-
