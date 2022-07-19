@@ -25,6 +25,8 @@ export const categoryValidator = async (req, res, next) => {
       await schema.validate(req.body, { strict: true });
       next();
    } catch (error) {
-      return res.status(422).json({ type: error.type, message: error.message });
+      return res
+         .status(422)
+         .json({ success: false, type: error.type, message: error.message });
    }
 };
