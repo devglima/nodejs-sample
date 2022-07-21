@@ -66,10 +66,11 @@ export class CategoriesController {
     */
    static async create(request, response) {
       try {
-         await Categories.create(request.body);
+         const category = await Categories.create(request.body);
 
          return response.status(200).json({
             success: true,
+            data: category,
             message: 'Category created successfully',
          });
       } catch (error) {
@@ -90,18 +91,18 @@ export class CategoriesController {
    static async update(request, response) {
       try {
          const { id } = request.params;
-         const update = await Categories.findByIdAndUpdate(id, request.body);
+         await Categories.findByIdAndUpdate(id, request.body);
 
          return response.status(200).json({
             success: true,
-            data: update,
+            data: await Categories.findById(id),
             message: 'Category update successfully',
          });
       } catch (error) {
          return response.status(500).json({
             error: error.message,
             success: false,
-            message: 'Categories retrieved successfully',
+            message: 'Could not possible update category. Try again later',
          });
       }
    }
