@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import Favorites from '../Models/Favorites.js';
 import { FavoritesRepository } from '../Repositories/FavoritesRepository.js';
 import auth from '../Utils/auth.js';
@@ -13,7 +12,7 @@ export class FavoritesController {
 
    static async index(request, response) {
       try {
-         const { _id: user_id } = await auth(request);
+         const { id: user_id } = await auth(request);
 
          /* const favorites = await Favorites.find({
             user_id: mongoose.Types.ObjectId(user_id),
