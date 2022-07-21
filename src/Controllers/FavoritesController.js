@@ -12,7 +12,7 @@ export class FavoritesController {
 
    static async index(request, response) {
       try {
-         const { id: user_id } = await auth(request);
+         const { _id: user_id } = await auth(request);
 
          /* const favorites = await Favorites.find({
             user_id: mongoose.Types.ObjectId(user_id),
