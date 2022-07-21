@@ -8,10 +8,6 @@ const { Schema, model } = mongoose;
 
 const ProductsSchema = new Schema(
    {
-      _id: {
-         type: mongoose.Types.ObjectId,
-         required: true,
-      },
       name: {
          type: String,
          required: true,
@@ -22,7 +18,7 @@ const ProductsSchema = new Schema(
       },
       discount_price: {
          type: Number,
-         required: true,
+         //required: true,
       },
       description: {
          type: String,
@@ -33,26 +29,21 @@ const ProductsSchema = new Schema(
       },
       weight: {
          type: Number,
-         required: true,
+         //required: true,
       },
       featured: {
          type: Number,
-         required: true,
+         //required: true,
       },
       restaurant_id: {
          type: Number,
-         required: true,
+         //required: true,
       },
       category_id: {
-         type: mongoose.Types.ObjectId,
+         type: Number,
          required: true,
       },
-      created_at: {
-         type: String,
-      },
-      updated_at: {
-         type: String,
-      },
+
       cIDCompany: {
          type: String,
          required: true,
