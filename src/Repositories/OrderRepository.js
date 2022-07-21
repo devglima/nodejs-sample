@@ -5,6 +5,7 @@ import OrderStatus from '..//Models/OrdersStatuses.js';
 import Payments from '../Models/Payments.js';
 import ProductOrders from '../Models/FoodOrders.js';
 import Foods from '../Models/Foods.js';
+import moment from 'moment';
 
 export class OrderRepository {
    static async create(req) {
@@ -15,6 +16,34 @@ export class OrderRepository {
          order_status_id,
          tax,
       });
+   }
+
+   static filters(user_id, request) {
+      var { order_status_id, user_id: userId, date_range } = request.query;
+      const params = {
+         user_id,
+      };
+
+      //Chnage user_id value if exist query user_id
+      if (userId) params['user_id'] = userId;
+
+      if (Array.isArray(order_status_id)) {
+         params['order_status_id'] = {
+            $in: order_status_id.map((value) => parseInt(value)),
+         };
+      }
+
+      //Set filter date by range
+      /* if (date_range) {
+         const ranges = date_range.split(' - ');
+
+         params['created_at'] = {
+            $gte: moment(ranges[0]).toISOString(),
+            $lt: moment(ranges[1]).toISOString(),
+         };
+      }
+ */
+      return params;
    }
 
    static async get($match) {
