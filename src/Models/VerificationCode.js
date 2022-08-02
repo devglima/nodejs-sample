@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import Inc from 'mongoose-sequence';
 
 const AutoIncrement = Inc(mongoose);
-const { Schema, model } = mongoose;
+const { Schema, Types, model } = mongoose;
 
 const VerificationCodeSchema = new Schema(
    {
-      user_id: { type: Number, required: true },
+      user_id: { type: Types.ObjectId, required: true },
       code: { type: String, required: true },
       type: { type: String },
       token: { type: String },
