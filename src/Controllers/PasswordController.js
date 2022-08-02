@@ -1,7 +1,6 @@
 import User from '../Models/user.js';
 import { Hash } from '../config/hash.js';
-import auth from '../Utils/auth.js';
-import verificationCode from '../Utils/verificationCode.js';
+import { VerificationCodeController as VerificationCode } from '../Controllers/VerificationCodeController.js';
 
 export class PasswordController {
    constructor() {}
@@ -17,14 +16,12 @@ export class PasswordController {
                message: 'User not found',
             });
 
-         const res = await verificationCode.generate({
-            userId: user.id,
-            type: 'reset password',
-         });
-
          return response.status(200).send({
             success: true,
-            data: res,
+            data: await VerificationCode.generate({
+               userId: user._id,
+               type: 'reset password',
+            }),
          });
       } catch (error) {
          return response.status(500).send({
@@ -37,9 +34,33 @@ export class PasswordController {
 
    static async reset(request, response) {
       try {
+         const { password, confirmPassword } = request.body;
+         const { token: verificationCodeToken } = request.params;
+
+         const verifiedCode = await VerificationCode.verified(
+            {
+               token: verificationCodeToken,
+            },
+            'token'
+         );
+
+         if (!verifiedCode.success)
+            return response.status(422).json(verifiedCode);
+
+         if (password != confirmPassword)
+            return response.status(422).send({
+               success: false,
+               message: 'Passwords do not match',
+            });
+
+         //Update password
+         await User.findByIdAndUpdate(verifiedCode.user._id, {
+            password: await Hash.make(password),
+         });
+
          return response.status(200).send({
             success: true,
-            data: res,
+            message: 'Your password  was updated successfully',
          });
       } catch (error) {
          return response.status(500).send({
