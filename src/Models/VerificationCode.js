@@ -11,6 +11,7 @@ const VerificationCodeSchema = new Schema(
       code: { type: String, required: true },
       type: { type: String },
       token: { type: String },
+      status: { type: Boolean },
       expire_at: { type: String },
    },
    {
