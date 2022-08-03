@@ -1,6 +1,6 @@
 import User from '../Models/user.js';
 import { Hash } from '../config/hash.js';
-import { VerificationCodeController as VerificationCode } from '../Controllers/VerificationCodeController.js';
+import { VerificationCodeRepository } from '../Repositories/VerificationCodeRepository.js';
 
 export class PasswordController {
    constructor() {}
@@ -18,10 +18,10 @@ export class PasswordController {
 
          return response.status(200).send({
             success: true,
-            data: await VerificationCode.generate({
-               userId: user._id,
-               type: 'reset password',
-            }),
+            data: await VerificationCodeRepository.generate(
+               user._id,
+               'reset password'
+            ),
          });
       } catch (error) {
          return response.status(500).send({
@@ -37,7 +37,7 @@ export class PasswordController {
          const { password, confirmPassword } = request.body;
          const { token: verificationCodeToken } = request.params;
 
-         const verifiedCode = await VerificationCode.verified(
+         const verifiedCode = await VerificationCodeRepository.verify(
             {
                token: verificationCodeToken,
             },
@@ -58,9 +58,17 @@ export class PasswordController {
             password: await Hash.make(password),
          });
 
+         //Expire reset password token
+         await VerificationCodeRepository.expire(
+            {
+               token: verificationCodeToken,
+            },
+            'token'
+         );
+
          return response.status(200).send({
             success: true,
-            message: 'Your password  was updated successfully',
+            message: 'Your password  was reset successfully',
          });
       } catch (error) {
          return response.status(500).send({
