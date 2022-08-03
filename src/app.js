@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import cors from 'cors';
+import * as app from './config/app.js';
 import * as database from './config/database.js';
 import Routes from './routes/index.js';
 
