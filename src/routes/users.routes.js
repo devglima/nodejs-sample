@@ -15,6 +15,6 @@ Route.post(
    .get('/users', authenticate, UserController.index)
    .get('/users/:id', authenticate, UserController.show)
    .put('/users/update/:id', authenticate, UserController.update)
-   .delete('/users/delete/:id', authenticate, UserController.update);
+   .delete('/users/delete/:id', authenticate, UserController.delete);
 
 export default Route;
