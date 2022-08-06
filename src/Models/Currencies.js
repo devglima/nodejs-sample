@@ -11,7 +11,6 @@ const { Schema, model } = mongoose;
 
 const CurrenciesSchema = new Schema(
    {
-      id: { type: Number, required: true },
       name: { type: String, required: true },
       code: { type: String, required: true },
       symbol: { type: String, required: true },
