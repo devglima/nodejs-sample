@@ -63,7 +63,7 @@ export class AuthController {
             expiresIn: '24h',
          });
 
-         return response.status(422).json({
+         return response.status(200).json({
             success: true,
             data: {
                token,
