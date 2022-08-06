@@ -11,22 +11,19 @@ export class CurrenciesController {
 
    static async index(request, response) {
       try {
-         /* const paginateOptions = {
-            // page: parseInt(request.query.page ?? 1),
-            //limit: parseInt(request.query.limit ?? 20),
-            customLabels: {
-               docs: 'data',
-               limit: 'limit',
-               totalDocs: 'total',
-            },
-         }; */
+         const { page, limit } = request.query;
 
-         const currencies = await Currencies.find({});
+         const options = {
+            page: parseInt(page ?? 1),
+            limit: parseInt(limit ?? 10),
+         };
+
+         const currencies = await Currencies.paginate({}, options);
 
          return response.status(200).send({
-            data: currencies,
             success: true,
             message: 'Currencies retrieved successfully',
+            ...currencies,
          });
       } catch (error) {
          return response.status(500).send({
