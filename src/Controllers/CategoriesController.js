@@ -1,4 +1,5 @@
 import Categories from '../Models/Categories.js';
+import { CategoryRepository } from '../Repositories/CategoryRepository.js';
 
 export class CategoriesController {
    /**
@@ -10,13 +11,12 @@ export class CategoriesController {
 
    static async index(request, response) {
       try {
-         const categories = await Categories.find().sort({
-            created_at: 'desc',
-         });
+         const categories = await CategoryRepository.get(request);
 
          return response.status(200).send({
-            success: false,
-            data: categories,
+            success: true,
+            //...CategoryRepository.filters(request),
+            ...categories,
          });
       } catch (error) {
          return response.status(500).send({
